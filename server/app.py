@@ -1,9 +1,9 @@
 from flask import Flask
-from flask_cors import CORS  
-from flask_pymongo import PyMongo
+from flask_cors import CORS 
 from dotenv import load_dotenv
 import os
 import routes
+import extensions
 
 load_dotenv()
 mongo = PyMongo()
@@ -15,10 +15,8 @@ def create_app():
     CORS(app)
     
     app.config['MONGO_URI'] = os.environ.get("MONGO_URI")  # Replace with your MongoDB URI
-    print(os.environ.get("MONGO_URI"))
-    mongo.init_app(app)
-    
-    routes.register_routes(app)
+    extensions.mongo.init_app(app)
+    routes.register_routes(app, mongo)
     
     return app
 
