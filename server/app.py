@@ -6,7 +6,6 @@ import routes
 import extensions
 
 load_dotenv()
-mongo = PyMongo()
 
 def create_app():
     app = Flask(__name__) 
