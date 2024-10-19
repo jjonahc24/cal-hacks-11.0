@@ -20,5 +20,6 @@ def address_to_coordinates(address = test_address):
     lat, lng = location['lat'], location['lng']
 
     print(f"Latitude: {lat}, Longitude: {lng}")
+    return (lat, lng)
 
 address_to_coordinates()
