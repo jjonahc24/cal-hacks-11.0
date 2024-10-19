@@ -1,20 +1,21 @@
 import './App.css';
-import Profile from './components/landing_page/profile'
-import ProfileDropDown from './components/landing_page/profile_dropdown'
-
-
+import React, { useState } from 'react';
+import Navbar from './components/navbar/navbar';  // Import the Navbar component
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './Pages/landing_page';
 
 function App() {
+
   return (
-    <div className="App">
-      <div className="">
-        <Profile /> 
-        <ProfileDropDown />
-      </div>
-      
+    <div className="App p-10">
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+          </Routes>
+      </Router>
     </div>
   );
 }
-
 
 export default App;
