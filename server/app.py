@@ -16,7 +16,7 @@ def create_app():
     
     app.config['MONGO_URI'] = os.environ.get("MONGO_URI")  # Replace with your MongoDB URI
     extensions.mongo.init_app(app)
-    routes.register_routes(app, mongo)
+    routes.register_routes(app)
     
     return app
 
