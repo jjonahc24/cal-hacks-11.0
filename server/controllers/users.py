@@ -27,7 +27,9 @@ def AddUserControl(request_json):
 
 def GetUserEmailControl(request_json):
     try:
+        print(request_json)
         result = GetUserEmail(request_json)
+        print(result)
         return jsonify(result), 200 
     except:
         return 500

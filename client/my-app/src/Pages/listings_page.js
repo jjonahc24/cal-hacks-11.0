@@ -33,7 +33,7 @@ const ListingsPage = (props) => {
                     {props.listings.map((listing, index) => {
                         return (
                             <div key={index} className="w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4">
-                                <div className="flex flex-row w-full justify-between ">
+                                <div className="flex flex-col w-full justify-between ">
                                     <div className="flex flex-row items-center gap-3">
                                         <img className="w-[40px] h-[40px] rounded-full" alt="owner-picture" src={listing.owner_picture}></img>
                                         <p className="p-0 m-0 text-[1rem]">{listing.owner_name}</p>
@@ -53,8 +53,8 @@ const ListingsPage = (props) => {
                                 {listingsExpanded.includes(listing._id) &&
                                     <div className="flex flex-col">
                                         <div className="flex flex-row gap-4 justify-start">
-                                            <div className="h-[10rem] w-[50%] min-w-[40%]">
-                                                <img alt="parking-photo" src={listing.photo_path}></img>
+                                            <div className="h-[10rem] w-[13rem]">
+                                                <img className="max-h-[8rem] w-full" alt="parking-photo" src={listing.photo_path}></img>
                                             </div>
                                             <div className="flex flex-col items-start text-[14px] text-start">
                                                 <h2 className="p-0 m-0 text-[#16B364]">{listing.address}</h2>

@@ -15,19 +15,19 @@ def get_listings():
     end_date_filter = request.args.get('end_date')
     return controllers.get(id_filter, owner_id_filter, address_filter, start_date_filter, end_date_filter)
 
-@listing_bp.route('/<id>', methods = ['GET'])
+@listing_bp.route('/<id>', methods = ['GET', 'OPTIONS'])
 def get_one_listings(id):
     return controllers.get_one(id)
 
-@listing_bp.route('/create', methods = ['POST'])
+@listing_bp.route('/create', methods = ['POST', 'OPTIONS'])
 def create_listing():
     return controllers.create(request.get_json())
 
-@listing_bp.route('/delete/<id>', methods = ['DELETE'])
+@listing_bp.route('/delete/<id>', methods = ['DELETE', 'OPTIONS'])
 def delete_listing(id):
     return controllers.delete(id)
 
-@listing_bp.route('/rent/<string:id>', methods = ['PUT'])
+@listing_bp.route('/rent/<string:id>', methods = ['PUT', 'OPTIONS'])
 def rent_listing(id):
     return controllers.rent_listing_control(id, request.json)
     
