@@ -29,6 +29,8 @@ function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [dbUser, setDbUser] = useState(null);
   const [needsAdditionalInfo, setNeedsAdditionalInfo] = useState(false);
+  const [userId, setUserId] = useState('');
+  
 
   useEffect(() => {
     const checkUserInDb = async () => {
@@ -48,7 +50,8 @@ function App() {
           if (!data) {
             setNeedsAdditionalInfo(true); 
           }
-  
+          
+          setUserId(data._id);
           setDbUser(data); 
   
         } catch (error) {
@@ -83,7 +86,7 @@ function App() {
           
           <Route path="/profile" element={<ProfilePage/>}/>
 
-          <Route path="/create-listing" element={<ListingPage />} />
+          <Route path="/create-listing" element={<ListingPage dbUser={dbUser}/>} />
 
           <Route path="/listings" element={<ListingsPage
             setSearchedLocation={setSearchedLocation}
