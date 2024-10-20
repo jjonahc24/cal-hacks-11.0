@@ -11,7 +11,9 @@ def get_listings():
     id_filter = request.args.get('id')
     owner_id_filter = request.args.get('owner_id')
     address_filter = request.args.get('address')
-    return get(id_filter, owner_id_filter, address_filter)
+    start_date_filter = request.args.get('start_date')
+    end_date_filter = request.args.get('end_date')
+    return get(id_filter, owner_id_filter, address_filter, start_date_filter, end_date_filter)
 
 @listing_bp.route('/create', methods = ['POST'])
 def create_listing():
