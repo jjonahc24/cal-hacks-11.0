@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './Pages/landing_page';
 import ListingPage from './Pages/create_listing';
 import ListingsPage from "./Pages/listings_page";
+import ProfilePage from "./Pages/profile_page"
 
 function App() {
   const [searchedLocation, setSearchedLocation] = useState("");
@@ -27,6 +28,7 @@ function App() {
   return (
     <div className="App p-10 h-full w-full">
       <Router>
+        <ProfilePage />
         <Navbar isUserAuthenthicated={isUserAuthenthicated}
           setUserAuthenthicated={setUserAuthenthicated}
           profileToggled={profileToggled}
