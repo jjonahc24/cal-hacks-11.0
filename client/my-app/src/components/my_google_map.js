@@ -7,10 +7,14 @@ const MyGoogleMap = () => {
     lng: -122.4194,
   };
 
+  // useEffect(() => {
+  //   console.log(process.env.REACT_APP_GOOGLE_MAPS_API_KEY)
+  // }, [])
+
 
   return (
     <div className="flex justify-center items-center w-full h-full rounded-lg shadow-lg overflow-hidden">
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
           <GMap
             mapContainerStyle={{ width: '100%', height: '100%' }}
             center={center}
