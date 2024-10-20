@@ -1,7 +1,9 @@
+import MyGoogleMap from "../components/my_google_map.js";
+
 const ListingsPage = () => {
     return (
         <div>
-            ListingsPage
+            <MyGoogleMap/>
         </div>
     )
 }
