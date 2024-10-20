@@ -24,9 +24,12 @@ def create(data):
         # convert to long and lat and other address info
         lat, lng, address, address_city, address_state = get_address_info(input_data.address)
 
+        #fetch photo path
+        res = mongo.db.User.find({"_id": ObjectId(input_data.owner_id)})
+
         new_listing = ListingModel(
             owner_name = input_data.owner_name,
-            owner_picture = input_data.owner_picture,
+            owner_picture = res[0]['profile_picture_path'],
             listing_name = input_data.listing_name,
             photo_path = input_data.photo_path,
             hourly_rate = input_data.hourly_rate,
