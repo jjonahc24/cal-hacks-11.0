@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
+import MyDatePicker from '../shadui/date_picker';
+import { useNavigate } from "react-router-dom"
 
 const SearchBar = () => {
   const [locationInput, setLocationInput] = useState("");
-  const [startDateInput, setStartDateInput] = useState(null);
-  const [endDateInput, setEndDateInput] = useState(null);
+  const [startDateInput, setStartDateInput] = useState(new Date());
+  const [endDateInput, setEndDateInput] = useState(new Date());
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    navigate("/listings")
   }
 
   return (
@@ -21,23 +26,37 @@ const SearchBar = () => {
           onChange={(e) => setLocationInput(e.target.value)}
           required
         />
-        <input
-          type="text"
-          placeholder="Check in"
-          className="px-2 py-2 w-36 focus:outline-none"
-          value={startDateInput}
-          autoComplete="off"
-          onChange={(e) => setStartDateInput(e.target.value)}
-          required
-        />
-        <input
+        {/* <div>
+          <input
+            type="text"
+            placeholder="Check in"
+            className="px-2 py-2 w-36 focus:outline-none"
+            value={startDateInput}
+            autoComplete="off"
+            onChange={(e) => setStartDateInput(e.target.value)}
+            required
+          />
+        </div> */}
+        <div className="flex items-start flex-col">
+          <label htmlFor="checkin" className="text-[#cccccc] text-[0.8rem]">Check In</label>
+          <MyDatePicker id="checkin" name="checkin" selectedDate={startDateInput} setDate={setStartDateInput}/>
+        </div>
+
+
+        {/* <input
           type="text"
           placeholder="Check out"
           className="px-2 py-2 w-36 focus:outline-none"
           value={endDateInput}
           autoComplete="off"
           onChange={(e) => setEndDateInput(e.target.value)}
-        />
+        /> */}
+        <div className="flex items-start flex-col">
+          <label htmlFor="checkout" className="text-[0.8rem] text-[#cccccc]">Check Out</label>
+          <MyDatePicker id="checkout" name="checkout" selectedDate={endDateInput} setDate={setEndDateInput}/>
+        </div>
+
+
 
         <button className="bg-[#16B364] text-white p-1 rounded-full" type="submit">
           <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">

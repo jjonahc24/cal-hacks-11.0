@@ -86,18 +86,18 @@ const ListingPage = () => {
             <Slider defaultValue={[33]} max={100} step={1} />
           </label>
           <br />
-          <div className="flex justify-between w-full">
+          <div className="flex justify-center w-full ">
             <div className="flex items-center">
-              <label className="mr-2">Start Date:</label>
+              <label className="w-[6rem]">Start Date:</label>
               <MyDatePicker />
             </div>
             <div className="flex items-center">
-              <label className="mr-2">End Date:</label>
+              <label className="w-[6rem]">End Date:</label>
               <MyDatePicker />
             </div>
           </div>
           <br />
-          <button type="submit" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+          <button type="submit" className="mt-4 bg-[#16B364] text-white px-4 py-2 rounded">
             Submit
           </button>
         </form>

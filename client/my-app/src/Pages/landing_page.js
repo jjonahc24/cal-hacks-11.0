@@ -5,7 +5,6 @@ import ProfileDropDown from '../components/landing_page/profile_dropdown';
 import ProfileDropDown_SignedIn from '../components/landing_page/profile_dropdown_signedin';
 import SearchBar from '../components/landing_page/search_bar';
 
-
 function LandingPage() {
   return (
     <div className="App h-screen relative">
