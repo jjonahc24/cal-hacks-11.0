@@ -6,12 +6,16 @@ def register_users(app):
 
 user_bp = Blueprint('users', __name__)
 
-@user_bp.route('/', methods = ['GET'])
+@user_bp.route('/', methods = ['GET', 'POST'])
 def get_all():
-    result = controllers.GetAllUserControl()
-    return result
+    if request.method == "POST":
+        result = controllers.AddUserControl(request.json)
+        return result
+    else:
+        result = controllers.GetAllUserControl()
+        return result
 
 @user_bp.route('/<string:id>/')
 def get_single(id):
-    result = controllers.GetUser(id)
+    result = controllers.GetUserControl(id)
     return result
