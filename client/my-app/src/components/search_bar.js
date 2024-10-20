@@ -3,7 +3,9 @@ import MyDatePicker from './shadui/date_picker';
 import { useNavigate } from "react-router-dom"
 
 const SearchBar = (props) => {
-
+  const [locationInput, setLocationInput] = useState("");
+  const [startDateInput, setStartDateInput] = useState(new Date());
+  const [endDateInput, setEndDateInput] = useState(new Date());
 
   const navigate = useNavigate();
 
@@ -13,6 +15,11 @@ const SearchBar = (props) => {
     //await fetch
     // setListings
     //    
+    props.setSearchedLocation(locationInput);
+    props.setStartDate(startDateInput);
+    props.setEndDate(endDateInput);
+
+    console.log(locationInput, startDateInput, endDateInput)
     navigate("/listings")
   }
 
@@ -23,9 +30,9 @@ const SearchBar = (props) => {
           type="text"
           placeholder="Where"
           className="pl-6 pr-2 py-2 w-48 focus:outline-none"
-          value={props.locationInput}
+          value={locationInput}
           autoComplete="off"
-          onChange={(e) => props.setLocationInput(e.target.value)}
+          onChange={(e) => setLocationInput(e.target.value)}
           required
         />
         {/* <div>
@@ -41,7 +48,7 @@ const SearchBar = (props) => {
         </div> */}
         <div className="flex items-start flex-col">
           <label htmlFor="checkin" className="text-[#cccccc] text-[0.8rem]">Check In</label>
-          <MyDatePicker id="checkin" name="checkin" selectedDate={props.startDateInput} setDate={props.setStartDateInput}/>
+          <MyDatePicker id="checkin" name="checkin" selectedDate={startDateInput} setDate={setStartDateInput}/>
         </div>
 
 
@@ -55,7 +62,7 @@ const SearchBar = (props) => {
         /> */}
         <div className="flex items-start flex-col">
           <label htmlFor="checkout" className="text-[0.8rem] text-[#cccccc]">Check Out</label>
-          <MyDatePicker id="checkout" name="checkout" selectedDate={props.endDateInput} setDate={props.setEndDateInput}/>
+          <MyDatePicker id="checkout" name="checkout" selectedDate={endDateInput} setDate={setEndDateInput}/>
         </div>
 
 

@@ -20,7 +20,7 @@ function LandingPage(props) {
             occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit 
             anim id est laborum.   
             </p>
-            <SearchBar locationInput={props.locationInput} startDateInput={props.startDateInput} endDateInput={props.endDateInput} setLocationInput={props.setLocationInput} setStartDateInput={props.setStartDateInput} setEndDateInput={props.setEndDateInput}/>
+            <SearchBar setSearchedLocation={props.setSearchedLocation} setStartDate={props.setStartDate} setEndDate={props.setEndDate}/>
           </div>
         </div>
     </div>

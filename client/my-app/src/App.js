@@ -7,11 +7,11 @@ import ListingPage from './Pages/create_listing';
 import ListingsPage from "./Pages/listings_page";
 
 function App() {
-  const [locationInput, setLocationInput] = useState("");
+  const [searchedLocation, setSearchedLocation] = useState("");
 
   // Convert date object to string before sending to backend 
-  const [startDateInput, setStartDateInput] = useState(new Date());
-  const [endDateInput, setEndDateInput] = useState(new Date());
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   const [listings, setListings] = useState([]);
   const [userListings, setUserListings] = useState([]); // used to store user posted listings 
@@ -27,21 +27,34 @@ function App() {
   return (
     <div className="App p-10 h-full w-full">
       <Router>
-        <Navbar isUserAuthenthicated={isUserAuthenthicated} setUserAuthenthicated={setUserAuthenthicated}
-          profileToggled={profileToggled} setProfileToggled={setProfileToggled} />
+        <Navbar isUserAuthenthicated={isUserAuthenthicated}
+          setUserAuthenthicated={setUserAuthenthicated}
+          profileToggled={profileToggled}
+          setProfileToggled={setProfileToggled} />
+
         <Routes>
-          <Route path="/" element={<LandingPage locationInput={locationInput} startDateInput={startDateInput} endDateInput={endDateInput}
-            setLocationInput={setLocationInput} setStartDateInput={setStartDateInput} setEndDateInput={setEndDateInput}
-            setListings={setListings} isUserAuthenthicated={isUserAuthenthicated} setUserAuthenthicated={setUserAuthenthicated}
-            profileToggled={profileToggled} setProfileToggled={setProfileToggled}
+          <Route path="/" element={<LandingPage
+            setSearchedLocation={setSearchedLocation}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            isUserAuthenthicated={isUserAuthenthicated}
+            setUserAuthenthicated={setUserAuthenthicated}
+            profileToggled={profileToggled}
+            setProfileToggled={setProfileToggled}
           />} />
 
           <Route path="/create-listing" element={<ListingPage />} />
 
-          <Route path="/listings" element={<ListingsPage locationInput={locationInput} startDateInput={startDateInput} endDateInput={endDateInput}
-            setLocationInput={setLocationInput} setStartDateInput={setStartDateInput} setEndDateInput={setEndDateInput}
-            listings={listings} isUserAuthenthicated={isUserAuthenthicated} setUserAuthenthicated={setUserAuthenthicated}
-            profileToggled={profileToggled} setProfileToggled={setProfileToggled}
+          <Route path="/listings" element={<ListingsPage
+            setSearchedLocation={setSearchedLocation}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            searchedLocation={searchedLocation}
+            listings={listings}
+            isUserAuthenthicated={isUserAuthenthicated}
+            setUserAuthenthicated={setUserAuthenthicated}
+            profileToggled={profileToggled}
+            setProfileToggled={setProfileToggled}
           />} />
         </Routes>
       </Router>
