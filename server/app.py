@@ -12,7 +12,7 @@ def create_app():
     
     # when running website in localhost, add http://localhost:3000 to origins
     CORS(app)
-    
+
     app.config['MONGO_URI'] = os.environ.get("MONGO_URI")  # Replace with your MongoDB URI
     extensions.mongo.init_app(app)
     routes.register_routes(app)

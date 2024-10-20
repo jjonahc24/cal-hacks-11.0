@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, confloat
 from typing import List
 
 class TimeFrameModel(BaseModel):
@@ -7,12 +7,12 @@ class TimeFrameModel(BaseModel):
     renter_id: str
 
 class ListingModel(BaseModel):
-    _id: str
+    _id: str = None
     owner_id: str
-    photo_path: str
-    hourly_rate: str
+    photo_path: str = None
+    hourly_rate: float
     time_frame: List[TimeFrameModel] = []
     address: str
-    latitude: str
-    longitude: str
+    latitude: float = 0
+    longitude: float = 0
 
