@@ -33,7 +33,7 @@ const ListingsPage = (props) => {
                     {props.listings.map((listing, index) => {
                         return (
                             <div key={index} className="w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4">
-                                <div className="flex flex-col w-full justify-between ">
+                                <div className="flex flex-row w-full justify-between ">
                                     <div className="flex flex-row items-center gap-3">
                                         <img className="w-[40px] h-[40px] rounded-full" alt="owner-picture" src={listing.owner_picture}></img>
                                         <p className="p-0 m-0 text-[1rem]">{listing.owner_name}</p>
