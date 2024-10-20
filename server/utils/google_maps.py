@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-test_address = "UC Berkeley"
+test_address = "Arizona"
 
 # Initialize the client with your API key
 def address_to_coordinates(address = test_address):
@@ -21,5 +21,3 @@ def address_to_coordinates(address = test_address):
 
     print(f"Latitude: {lat}, Longitude: {lng}")
     return (lat, lng)
-
-address_to_coordinates()

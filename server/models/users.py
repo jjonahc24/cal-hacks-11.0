@@ -1,5 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List
+from bson import ObjectId
 
 class RentHistoryModel(BaseModel):
     owner_id: str
@@ -7,13 +8,11 @@ class RentHistoryModel(BaseModel):
     end_date: str
 
 class UserModel(BaseModel):
-    _id: str
-    username: str = None
-    password: str = None
-    first_name: str = None
-    last_name: str = None
-    profile_picture_path: str = None
+    id: str = "default_id"
+    username: str = "default_user"
+    password: str = "default_password"
+    first_name: str = "default_fn"
+    last_name: str = "default_ln"
+    profile_picture_path: str = "default_path"
     listings: list[str] = []
-    rating: float = None
-    rent_history: RentHistoryModel
-
+    rating: float = 100
