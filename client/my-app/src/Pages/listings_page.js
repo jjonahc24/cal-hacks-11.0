@@ -3,6 +3,7 @@ import SearchBar from "../components/search_bar.js"
 import { useState, useEffect } from "react";
 import downIcon from "../Assets/down-icon.svg";
 import rightIcon from "../Assets/right-icon.svg";
+import starIcon from "../Assets/star-fill.svg";
 
 let testListings = [
     {
@@ -62,8 +63,8 @@ const ListingsPage = (props) => {
                 setStartDate={props.setStartDate}
                 setEndDate={props.setEndDate} />
 
-            <div className="h-full w-full flex flex-row gap-4 justify-center">
-                <div className="listings flex flex-col h-[80%] bg-[#EDFCF2] rounded-xl shadow-2xl shadow-[#CFE9D8] w-1/3 items-center overflow-y-scroll">
+            <div className="h-full w-full flex flex-col lg:flex-row gap-4 justify-center">
+                <div className="listings flex flex-col h-[80%] bg-[#EDFCF2] rounded-xl shadow-2xl shadow-[#CFE9D8] w-full lg:w-1/3 items-center overflow-y-scroll">
                     <div>
                         <h1 className="p-4 m-0 text-[24px]">
                             Available Listings in <span className="text-[#34C759]">{props.searchedLocation}</span>
@@ -91,9 +92,9 @@ const ListingsPage = (props) => {
                                 </div>
 
                                 {listingsExpanded.includes(listing.id) &&
-                                    <div className="">
-                                        <div className="flex flex-col lg:flex-row gap-4 ">
-                                            <div className="lg:h-[10rem] lg:w-full min-w-[40%]">
+                                    <div className="flex flex-col">
+                                        <div className="flex flex-row gap-4 ">
+                                            <div className="h-[10rem] w-full min-w-[40%]">
                                                 <img alt="parking-photo" src={listing.photoPath}></img>
                                             </div>
                                             <div className="flex flex-col items-start text-[14px] text-start">
@@ -102,6 +103,17 @@ const ListingsPage = (props) => {
                                                 <p className="">
                                                     {listing.description}
                                                 </p>
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-row w-full justify-between">
+                                            <button className="rounded-lg text-white w-[10rem] p-1 text-[12px] bg-[#16B364] hover:scale-[0.99] transition">
+                                                View Listing
+                                            </button>
+                                            <div className="rating flex-row flex gap-4 items-center">
+                                                <p>
+                                                    {listing.listingRating}
+                                                </p>
+                                                <img src={starIcon} alt="star-icon"></img>
                                             </div>
                                         </div>
 
@@ -113,7 +125,7 @@ const ListingsPage = (props) => {
 
                     })}
                 </div>
-                <div className="h-[80%] w-2/3">
+                <div className="h-[80%] w-full lg:w-2/3">
                     <MyGoogleMap />
                 </div>
 

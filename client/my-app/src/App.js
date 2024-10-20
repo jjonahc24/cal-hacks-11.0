@@ -56,6 +56,18 @@ function App() {
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
+
+          <Route path="/listings/" element={<ListingsPage
+            setSearchedLocation={setSearchedLocation}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            searchedLocation={searchedLocation}
+            listings={listings}
+            isUserAuthenthicated={isUserAuthenthicated}
+            setUserAuthenthicated={setUserAuthenthicated}
+            profileToggled={profileToggled}
+            setProfileToggled={setProfileToggled}
+          />} />
         </Routes>
       </Router>
     </div>

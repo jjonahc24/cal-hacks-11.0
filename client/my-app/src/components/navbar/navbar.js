@@ -6,7 +6,7 @@ import Profile from '../landing_page/profile';
 import ProfileDropDown from '../landing_page/profile_dropdown';
 import ProfileDropDown_SignedIn from '../landing_page/profile_dropdown_signedin';
 
-const Navbar = () => {
+const Navbar = (props) => {
     // const [isUserAuthenthicated, setUserAuthenthicated] = useState(true);
     // const [isSellerAuthenthicated, setSellerAuthenthicated] = useState(false);
     const [profileToggled, setProfileToggled] = useState(false);
