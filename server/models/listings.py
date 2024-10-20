@@ -10,10 +10,11 @@ class TimeFrameModel(BaseModel):
 class ListingModel(BaseModel):
     _id: str = None
     owner_id: str = None
-    photo_path: str = None
+    photo_path: str = ""
     hourly_rate: float
     time_frame: List[TimeFrameModel] = []
     address: str
     latitude: float = 0
     longitude: float = 0
+    description: str = ""
 

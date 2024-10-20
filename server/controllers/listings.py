@@ -22,6 +22,7 @@ def create(data):
             address = input_data.address,
             latitude = lat,
             longitude = lng,
+            description = input_data.description,
         )
 
         new_listing = new_listing.dict()
