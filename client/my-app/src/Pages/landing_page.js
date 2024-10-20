@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import Profile from '../components/landing_page/profile';
 import ProfileDropDown from '../components/landing_page/profile_dropdown';
 import ProfileDropDown_SignedIn from '../components/landing_page/profile_dropdown_signedin';
-import SearchBar from '../components/landing_page/search_bar';
+import SearchBar from '../components/search_bar';
 
-function LandingPage() {
+function LandingPage(props) {
   return (
     <div className="App h-screen relative">
     
@@ -20,7 +20,7 @@ function LandingPage() {
             occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit 
             anim id est laborum.   
             </p>
-            <SearchBar />
+            <SearchBar setSearchedLocation={props.setSearchedLocation} setStartDate={props.setStartDate} setEndDate={props.setEndDate}/>
           </div>
         </div>
     </div>
