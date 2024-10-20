@@ -10,6 +10,10 @@ class TimeFrameModel(BaseModel):
 class ListingModel(BaseModel):
     _id: str = None
     owner_id: str = None
+    owner_name: str = None
+    owner_picture: str = None
+    listing_name: str = None
+    listing_rating: float = 0.0
     photo_path: str = ""
     hourly_rate: float
     time_frame: List[TimeFrameModel] = []

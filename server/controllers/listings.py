@@ -25,6 +25,9 @@ def create(data):
         lat, lng, address, address_city, address_state = get_address_info(input_data.address)
 
         new_listing = ListingModel(
+            owner_name = input_data.owner_name,
+            owner_picture = input_data.owner_picture,
+            listing_name = input_data.listing_name,
             photo_path = input_data.photo_path,
             hourly_rate = input_data.hourly_rate,
             time_frame = input_data.time_frame,
