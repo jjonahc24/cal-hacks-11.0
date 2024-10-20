@@ -1,5 +1,6 @@
 from pydantic import BaseModel, confloat
 from typing import List
+from bson import ObjectId
 
 class TimeFrameModel(BaseModel):
     start_date: str
@@ -8,11 +9,12 @@ class TimeFrameModel(BaseModel):
 
 class ListingModel(BaseModel):
     _id: str = None
-    owner_id: str
-    photo_path: str = None
+    owner_id: str = None
+    photo_path: str = ""
     hourly_rate: float
     time_frame: List[TimeFrameModel] = []
     address: str
     latitude: float = 0
     longitude: float = 0
+    description: str = ""
 
