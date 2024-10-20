@@ -6,6 +6,7 @@ import LandingPage from './Pages/landing_page';
 import ListingPage from './Pages/create_listing';
 import ListingsPage from "./Pages/listings_page";
 import ProfilePage from "./Pages/profile_page"
+import ListingView from "./Pages/listing_view.js";
 
 function App() {
   const [searchedLocation, setSearchedLocation] = useState("");
@@ -28,7 +29,6 @@ function App() {
   return (
     <div className="App p-10 h-full w-full">
       <Router>
-        <ProfilePage />
         <Navbar isUserAuthenthicated={isUserAuthenthicated}
           setUserAuthenthicated={setUserAuthenthicated}
           profileToggled={profileToggled}
@@ -44,6 +44,8 @@ function App() {
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
+          
+          <Route path="/profile" element={<ProfilePage/>}/>
 
           <Route path="/create-listing" element={<ListingPage />} />
 
@@ -59,16 +61,8 @@ function App() {
             setProfileToggled={setProfileToggled}
           />} />
 
-          <Route path="/listings/" element={<ListingsPage
-            setSearchedLocation={setSearchedLocation}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
-            searchedLocation={searchedLocation}
-            listings={listings}
-            isUserAuthenthicated={isUserAuthenthicated}
-            setUserAuthenthicated={setUserAuthenthicated}
-            profileToggled={profileToggled}
-            setProfileToggled={setProfileToggled}
+          <Route path="/listings/:id" element={<ListingView
+            
           />} />
         </Routes>
       </Router>

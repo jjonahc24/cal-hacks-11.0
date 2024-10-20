@@ -67,7 +67,7 @@ const ProfilePage = () => {
 
   return (
     <div className="Canvas w-full h-full flex justify-center items-center">
-      <div className="w-[60%] max-w-2xl h-auto bg-white rounded-xl shadow-2xl shadow-[#CFE9D8] p-8">
+      <div className="w-[60%] max-w-2xl h-4/5 bg-white rounded-xl shadow-2xl shadow-[#CFE9D8] p-8 overflow-y-scroll">
         {/* My Info Section */}
         <div className="mb-10">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">My Info</h2>
