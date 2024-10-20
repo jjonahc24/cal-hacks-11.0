@@ -59,7 +59,7 @@ def get(id_filter = None,
         if owner_id_filter:
             filter_queries['owner_id'] = ObjectId(owner_id_filter)
         if address_filter:
-            lat, lng = address_to_coordinates(address_filter)
+            lat, lng, x, y, z = get_address_info(address_filter)
             radius = 1 #1km = 0.6m
             bounding = calculate_bounding_box(lat, lng, radius)
             
@@ -128,6 +128,29 @@ def get(id_filter = None,
     except Exception as e:
         return jsonify({"error": str(e)}), 400
     
+def get_one(id):
+    try:
+        if not id:
+            return jsonify({"msg": "error",
+                           "description": "id not found"}), 404
+        
+        #fetch listings
+        res = mongo.db.Listing.find({"_id": ObjectId(id)})
+
+        #convert ObjectID to strings
+        listings = []
+        for listing in res:
+            listing['_id'] = str(listing['_id'])
+            listing['owner_id'] = str(listing['owner_id'])
+            
+            listings.append(listing)
+
+        return jsonify(listings[0]), 200
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    
+
 def delete(id):
     try:
         #attempt to delete listing
@@ -167,3 +190,5 @@ def rent(id, request_json):
     )
     
     return {"message": "success"}
+
+

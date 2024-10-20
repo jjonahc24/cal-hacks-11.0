@@ -15,7 +15,7 @@ def get_address_info(address = test_address):
     # Extract latitude and longitude
     location = geocode_result[0]['geometry']['location']
     lat, lng = location['lat'], location['lng']
-    print(geocode_result)
+
     #get full address info
     full_address = geocode_result[0]['formatted_address']
     breakdown = full_address.split(", ")
