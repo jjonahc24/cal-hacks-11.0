@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MyDatePicker from './shadui/date_picker';
 import { useNavigate } from "react-router-dom"
 
@@ -50,7 +50,6 @@ const testListings = [
   }
 ]
 
-
 const SearchBar = (props) => {
   const [locationInput, setLocationInput] = useState("");
   const [startDateInput, setStartDateInput] = useState(new Date());
@@ -58,12 +57,20 @@ const SearchBar = (props) => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log(startDateInput, endDateInput)  
+  }, [startDateInput, endDateInput])
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //await fetch
-    // setListings
-    //    
+    // parse dates
+    
+
+    const filteredListings = await fetch(`http://localhost:8000/listing?address=${locationInput}&start_date=${startDateInput}&end_date=${endDateInput}`)
+
+    
+    
 
     
 
