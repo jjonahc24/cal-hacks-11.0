@@ -152,9 +152,7 @@ const ProfilePage = (props) => {
             <div className=" flex flex-col items-between space-y-4 w-full gap-2">
               <div className="flex flex-row w-full justify-between items-center">
                 <p className="text-lg font-medium text-left">Profile Picture</p>
-                <div className="w-14 h-14 bg-gray-300 rounded-full flex items-center justify-center text-gray-500">
-                  <i className="fas fa-user"></i>
-                </div>
+                  <img className="w-14 h-14 bg-gray-300 rounded-full flex items-center justify-center" alt="profile" src={userData.profile_picture_path}></img>
               </div>
               <div className="flex flex-row w-full justify-between items-center">
                 <p className="text-lg font-medium">First Name</p>
