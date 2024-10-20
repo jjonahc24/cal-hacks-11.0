@@ -5,11 +5,7 @@ import Profile from '../landing_page/profile';
 import ProfileDropDown from '../landing_page/profile_dropdown';
 import ProfileDropDown_SignedIn from '../landing_page/profile_dropdown_signedin';
 
-const Navbar = () => {
-    const [isUserAuthenthicated, setUserAuthenthicated] = useState(true);
-    const [isSellerAuthenthicated, setSellerAuthenthicated] = useState(false);
-    const [profileToggled, setProfileToggled] = useState(false);
-
+const Navbar = (props) => {
     const navigate = useNavigate();
 
     return (
@@ -19,12 +15,12 @@ const Navbar = () => {
             </div>
             
             <div className="flex items-center relative"> {/* Added relative to this div */}
-                <Profile profileToggled={profileToggled} setProfileToggled={setProfileToggled} />
+                <Profile profileToggled={props.profileToggled} setProfileToggled={props.setProfileToggled} />
                 
                 {/* Dropdown should be absolutely positioned relative to the parent */}
-                {profileToggled ? (
+                {props.profileToggled ? (
                     <div className="absolute top-full right-0 mt-2 w-48 bg-white shadow-lg z-50"> {/* Positioned below the profile */}
-                        {isUserAuthenthicated ? <ProfileDropDown_SignedIn /> : <ProfileDropDown /> }
+                        {props.isUserAuthenthicated ? <ProfileDropDown_SignedIn /> : <ProfileDropDown /> }
                     </div>
                 ) : null}
             </div>

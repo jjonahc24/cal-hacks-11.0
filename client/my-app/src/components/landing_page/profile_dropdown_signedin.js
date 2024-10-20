@@ -7,9 +7,9 @@ function ProfileDropDown_SignedIn() {
   
   return (
     <div className="flex flex-col items-center mt-2">
-        <div className="bg-white w-40 border border-gray-300 rounded shadow-md pl-2">
+        <div className="bg-white w-full border border-gray-300 rounded shadow-md pl-2">
             <button className="text-left w-full py-1 hover:bg-gray-100 text-sm mb-3 mt-3">Profile</button>
-            <button className="text-left w-full py-1 hover:bg-gray-100 text-sm mb-3" onClick={() => navigate("/listing-page")}>Register Listing</button>
+            <button className="text-left w-full py-1 hover:bg-gray-100 text-sm mb-3" onClick={() => navigate("/create-listing")}>Register Listing</button>
             
         </div>
     </div>

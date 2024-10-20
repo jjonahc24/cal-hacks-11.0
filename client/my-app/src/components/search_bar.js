@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
-import MyDatePicker from '../shadui/date_picker';
+import MyDatePicker from './shadui/date_picker';
 import { useNavigate } from "react-router-dom"
 
-const SearchBar = () => {
-  const [locationInput, setLocationInput] = useState("");
-  const [startDateInput, setStartDateInput] = useState(new Date());
-  const [endDateInput, setEndDateInput] = useState(new Date());
+const SearchBar = (props) => {
+
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //await fetch
+    // setListings
+    //    
     navigate("/listings")
   }
 
@@ -21,9 +23,9 @@ const SearchBar = () => {
           type="text"
           placeholder="Where"
           className="pl-6 pr-2 py-2 w-48 focus:outline-none"
-          value={locationInput}
+          value={props.locationInput}
           autoComplete="off"
-          onChange={(e) => setLocationInput(e.target.value)}
+          onChange={(e) => props.setLocationInput(e.target.value)}
           required
         />
         {/* <div>
@@ -39,7 +41,7 @@ const SearchBar = () => {
         </div> */}
         <div className="flex items-start flex-col">
           <label htmlFor="checkin" className="text-[#cccccc] text-[0.8rem]">Check In</label>
-          <MyDatePicker id="checkin" name="checkin" selectedDate={startDateInput} setDate={setStartDateInput}/>
+          <MyDatePicker id="checkin" name="checkin" selectedDate={props.startDateInput} setDate={props.setStartDateInput}/>
         </div>
 
 
@@ -53,7 +55,7 @@ const SearchBar = () => {
         /> */}
         <div className="flex items-start flex-col">
           <label htmlFor="checkout" className="text-[0.8rem] text-[#cccccc]">Check Out</label>
-          <MyDatePicker id="checkout" name="checkout" selectedDate={endDateInput} setDate={setEndDateInput}/>
+          <MyDatePicker id="checkout" name="checkout" selectedDate={props.endDateInput} setDate={props.setEndDateInput}/>
         </div>
 
 

@@ -10,6 +10,8 @@ const ListingPage = () => {
   const [photo, setPhoto] = useState(null);
   const [moneyRate, setMoneyRate] = useState('');
   const [timeFrames, setTimeFrames] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   // Reference to the hidden file input
   const fileInputRef = useRef(null);
@@ -89,11 +91,16 @@ const ListingPage = () => {
           <div className="flex justify-center w-full ">
             <div className="flex items-center">
               <label className="w-[6rem]">Start Date:</label>
-              <MyDatePicker />
+              <div className="border-b-4 w-4/12" >
+                <MyDatePicker selectedDate={startDate} setDate={setStartDate}/>
+              </div>
+              
             </div>
             <div className="flex items-center">
               <label className="w-[6rem]">End Date:</label>
-              <MyDatePicker />
+              <div className="border-b-4 w-4/12" >
+                <MyDatePicker selectedDate={endDate} setDate={setEndDate}/>
+              </div>
             </div>
           </div>
           <br />
