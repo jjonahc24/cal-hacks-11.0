@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from controllers.listings import create
+from controllers.listings import create, get
 
 def register_listings(app):
     app.register_blueprint(listing_bp, url_prefix='/listings')
@@ -8,7 +8,10 @@ listing_bp = Blueprint('listings', __name__)
 
 @listing_bp.route('/', methods = ['GET'])
 def get_listings():
-    return jsonify({"data": "Listings!"}), 200
+    id_filter = request.args.get('id')
+    owner_id_filter = request.args.get('owner_id')
+    address_filter = request.args.get('address')
+    return get(id_filter, owner_id_filter, address_filter)
 
 @listing_bp.route('/create', methods = ['POST'])
 def create_listing():
