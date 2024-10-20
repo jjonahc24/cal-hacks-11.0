@@ -2,6 +2,55 @@ import React, { useState } from 'react';
 import MyDatePicker from './shadui/date_picker';
 import { useNavigate } from "react-router-dom"
 
+const testListings = [
+  {
+      id: 1,
+      ownerId: 1,
+      ownerName: "Vincent Aung",
+      photoPath: "https://cdn.discordapp.com/attachments/1296995206339629093/1297394441421717584/image_1_1.png?ex=6715c43b&is=671472bb&hm=059a50783bb0cd0c4f52a7af34f8cad0b97ccfe9d821f623a03a51c59e9c2040&",
+      listingRating: 4.9,
+      ownerPicture: "https://cdn.discordapp.com/attachments/1152053564580036688/1297390931716214876/alexander.jpg?ex=6715c0f6&is=67146f76&hm=6e9c05748798b3b17967aa7fa7c6713e76be4ff02a587e86b42d5c019ca4607e&",
+      moneyRate: 20,
+      timeFrames: [],
+      address: "2000 Durant Ave, Berkeley CA",
+      latitude: 37.7749,
+      longitude: -122.4194,
+      distanceFromTarget: 0.4,
+      description: "This is my parking spot. Please buy because I need money for my college tuition. Berkeley is too hard. 162 is too hard and my butthole is sore"
+  },
+  {
+      id: 2,
+      ownerId: 2,
+      ownerName: "Earnest Lin",
+      photoPath: "https://cdn.discordapp.com/attachments/1296995206339629093/1297394441421717584/image_1_1.png?ex=6715c43b&is=671472bb&hm=059a50783bb0cd0c4f52a7af34f8cad0b97ccfe9d821f623a03a51c59e9c2040&",
+      listingRating: 4.3,
+      ownerPicture: "https://cdn.discordapp.com/attachments/1152053564580036688/1297390931716214876/alexander.jpg?ex=6715c0f6&is=67146f76&hm=6e9c05748798b3b17967aa7fa7c6713e76be4ff02a587e86b42d5c019ca4607e&",
+      moneyRate: 30,
+      timeFrames: [],
+      address: "2000 Durant Ave, Berkeley CA",
+      latitude: 37.866079,
+      longitude: -122.26973,
+      distanceFromTarget: 0.3,
+      description: "This is my parking spot. Please buy because I need money for my college tuition. Berkeley is too hard. 162 is too hard and my butthole is sore"
+  },
+  {
+      id: 3,
+      ownerId: 3,
+      ownerName: "Vincent Aung",
+      photoPath: "https://cdn.discordapp.com/attachments/1296995206339629093/1297394441421717584/image_1_1.png?ex=6715c43b&is=671472bb&hm=059a50783bb0cd0c4f52a7af34f8cad0b97ccfe9d821f623a03a51c59e9c2040&",
+      listingRating: 5.0,
+      ownerPicture: "https://cdn.discordapp.com/attachments/1152053564580036688/1297390931716214876/alexander.jpg?ex=6715c0f6&is=67146f76&hm=6e9c05748798b3b17967aa7fa7c6713e76be4ff02a587e86b42d5c019ca4607e&",
+      moneyRate: 20,
+      timeFrames: [],
+      address: "2000 Durant Ave, Berkeley CA",
+      latitude: 37.866079,
+      longitude: -122.26973,
+      distanceFromTarget: 0.2,
+      description: "This is my parking spot. Please buy because I need money for my college tuition. Berkeley is too hard. 162 is too hard and my butthole is sore"
+  }
+]
+
+
 const SearchBar = (props) => {
   const [locationInput, setLocationInput] = useState("");
   const [startDateInput, setStartDateInput] = useState(new Date());
@@ -15,12 +64,18 @@ const SearchBar = (props) => {
     //await fetch
     // setListings
     //    
+
+    
+
     props.setSearchedLocation(locationInput);
     props.setStartDate(startDateInput);
     props.setEndDate(endDateInput);
 
-    console.log(locationInput, startDateInput, endDateInput)
-    navigate("/listings")
+    setTimeout(() => {
+      props.setListings(testListings);
+      navigate("/listings")
+    }, 1000)
+
   }
 
   return (

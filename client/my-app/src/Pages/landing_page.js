@@ -46,8 +46,8 @@ function LandingPage(props) {
   return (
     <div className="App h-screen relative">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[220%] text-center text-3xl font-bold mb-4">{text}</h1> {/* Typewriter effect text */}
-        <SearchBar setSearchedLocation={props.setSearchedLocation} setStartDate={props.setStartDate} setEndDate={props.setEndDate}/>
+        <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[230%] text-center text-3xl font-bold mb-4">{text}</h1> {/* Typewriter effect text */}
+        <SearchBar setListings={props.setListings} setSearchedLocation={props.setSearchedLocation} setStartDate={props.setStartDate} setEndDate={props.setEndDate}/>
       </div>
     </div>
   );
