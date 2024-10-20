@@ -6,53 +6,6 @@ import downIcon from "../Assets/down-icon.svg";
 import rightIcon from "../Assets/right-icon.svg";
 import starIcon from "../Assets/star-fill.svg";
 
-let testListings = [
-    {
-        id: 1,
-        ownerId: 1,
-        ownerName: "Vincent Aung",
-        photoPath: "https://cdn.discordapp.com/attachments/1296995206339629093/1297394441421717584/image_1_1.png?ex=6715c43b&is=671472bb&hm=059a50783bb0cd0c4f52a7af34f8cad0b97ccfe9d821f623a03a51c59e9c2040&",
-        listingRating: 4.9,
-        ownerPicture: "https://cdn.discordapp.com/attachments/1152053564580036688/1297390931716214876/alexander.jpg?ex=6715c0f6&is=67146f76&hm=6e9c05748798b3b17967aa7fa7c6713e76be4ff02a587e86b42d5c019ca4607e&",
-        moneyRate: 20,
-        timeFrames: [],
-        address: "2000 Durant Ave, Berkeley CA",
-        latitude: 37.866079,
-        longitude: -122.26973,
-        distanceFromTarget: 0.4,
-        description: "This is my parking spot. Please buy because I need money for my college tuition. Berkeley is too hard. 162 is too hard and my butthole is sore"
-    },
-    {
-        id: 2,
-        ownerId: 2,
-        ownerName: "Earnest Lin",
-        photoPath: "https://cdn.discordapp.com/attachments/1296995206339629093/1297394441421717584/image_1_1.png?ex=6715c43b&is=671472bb&hm=059a50783bb0cd0c4f52a7af34f8cad0b97ccfe9d821f623a03a51c59e9c2040&",
-        listingRating: 4.3,
-        ownerPicture: "https://cdn.discordapp.com/attachments/1152053564580036688/1297390931716214876/alexander.jpg?ex=6715c0f6&is=67146f76&hm=6e9c05748798b3b17967aa7fa7c6713e76be4ff02a587e86b42d5c019ca4607e&",
-        moneyRate: 30,
-        timeFrames: [],
-        address: "2000 Durant Ave, Berkeley CA",
-        latitude: 37.866079,
-        longitude: -122.26973,
-        distanceFromTarget: 0.3,
-        description: "This is my parking spot. Please buy because I need money for my college tuition. Berkeley is too hard. 162 is too hard and my butthole is sore"
-    },
-    {
-        id: 3,
-        ownerId: 3,
-        ownerName: "Vincent Aung",
-        photoPath: "https://cdn.discordapp.com/attachments/1296995206339629093/1297394441421717584/image_1_1.png?ex=6715c43b&is=671472bb&hm=059a50783bb0cd0c4f52a7af34f8cad0b97ccfe9d821f623a03a51c59e9c2040&",
-        listingRating: 5.0,
-        ownerPicture: "https://cdn.discordapp.com/attachments/1152053564580036688/1297390931716214876/alexander.jpg?ex=6715c0f6&is=67146f76&hm=6e9c05748798b3b17967aa7fa7c6713e76be4ff02a587e86b42d5c019ca4607e&",
-        moneyRate: 20,
-        timeFrames: [],
-        address: "2000 Durant Ave, Berkeley CA",
-        latitude: 37.866079,
-        longitude: -122.26973,
-        distanceFromTarget: 0.2,
-        description: "This is my parking spot. Please buy because I need money for my college tuition. Berkeley is too hard. 162 is too hard and my butthole is sore"
-    }
-]
 
 const ListingsPage = (props) => {
     const [listingsExpanded, setListingsExpanded] = useState([]);
@@ -64,7 +17,10 @@ const ListingsPage = (props) => {
             <SearchBar
                 setSearchedLocation={props.setSearchedLocation}
                 setStartDate={props.setStartDate}
-                setEndDate={props.setEndDate} />
+                setEndDate={props.setEndDate} 
+                setListings={props.setListings}
+                />
+                
 
             <div className="h-full w-full flex flex-col lg:flex-row gap-4 justify-center">
                 <div className="listings flex flex-col h-[80%] bg-[#EDFCF2] rounded-xl shadow-2xl shadow-[#CFE9D8] w-full lg:w-1/3 items-center overflow-y-scroll">
@@ -74,7 +30,7 @@ const ListingsPage = (props) => {
                         </h1>
                     </div>
                     <hr className="w-4/5 mb-2 border-[#16B364]"></hr>
-                    {testListings.map((listing, index) => {
+                    {props.listings.map((listing, index) => {
                         return (
                             <div key={index} className="w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4">
                                 <div className="flex flex-row w-full justify-between ">
@@ -129,7 +85,7 @@ const ListingsPage = (props) => {
                     })}
                 </div>
                 <div className="h-[80%] w-full lg:w-2/3">
-                    <MyGoogleMap />
+                    <MyGoogleMap listings={props.listings}/>
                 </div>
 
             </div>

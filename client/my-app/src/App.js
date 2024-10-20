@@ -9,6 +9,9 @@ import ProfilePage from "./Pages/profile_page"
 import ListingView from "./Pages/listing_view.js";
 import Signup from "./Pages/signup";
 
+// Auth0 imports
+import { useAuth0 } from "@auth0/auth0-react";
+
 function App() {
   const [searchedLocation, setSearchedLocation] = useState("");
 
@@ -23,33 +26,42 @@ function App() {
 
   // User authenthication states 
   const [profileToggled, setProfileToggled] = useState(false);
-  // const { user, isAuthenticated, isLoading } = useAuth0();
-  // const [dbUser, setDbUser] = useState(null);
-  // const [needsAdditionalInfo, setNeedsAdditionalInfo] = useState(false);
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const [dbUser, setDbUser] = useState(null);
+  const [needsAdditionalInfo, setNeedsAdditionalInfo] = useState(false);
 
-  // useEffect(() => {
-  //   const checkUserInDb = async () => {
-  //     if (isAuthenticated && user) {
-  //       try {
-  //         const response = await fetch(...);
-  //         const data = await response.json();
-          
-  //         if (!data || !data.firstName || !data.lastName) {
-  //           setNeedsAdditionalInfo(true); 
-  //         }
+  useEffect(() => {
+    const checkUserInDb = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const response = await fetch("http://127.0.0.1:8000/user/getUserEmail", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",  // Specify that you're sending JSON
+            },
+            body: JSON.stringify({ email: user.email }),  // Stringify the body data
+          });
+  
+          const data = await response.json();  // Parse the response
+          console.log(data); 
 
-  //         setDbUser(data); 
+          if (!data) {
+            setNeedsAdditionalInfo(true); 
+          }
+  
+          setDbUser(data); 
+  
+        } catch (error) {
+          console.log(error); 
+        }
+      }
+    };
+  
+    checkUserInDb();
+  }, [isAuthenticated, user]);
 
-  //       } catch (error) {
-  //         console.log(error); 
-  //       }
-  //     }
-  //   }
+  if (isLoading) { return <div>Loading...</div>; } 
 
-  //   checkUserInDb(); // keep conditionally checking user in db when we get authenticated 
-  // }, [isAuthenticated, user])
-
-  // if (isLoading) { return <div>Loading...</div>; } 
 
   return (
     <div className="App p-10 h-full w-full">
@@ -59,11 +71,12 @@ function App() {
           setProfileToggled={setProfileToggled} />
 
         <Routes>
-          <Route path="/" element={
+          <Route path="/" element={ needsAdditionalInfo ? <Signup needsAdditionalInfo={needsAdditionalInfo} setNeedsAdditionalInfo={setNeedsAdditionalInfo}/> :
             <LandingPage
             setSearchedLocation={setSearchedLocation}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            setListings={setListings}
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
@@ -76,13 +89,14 @@ function App() {
             setSearchedLocation={setSearchedLocation}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            setListings={setListings}
             searchedLocation={searchedLocation}
             listings={listings}
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
 
-          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-up" element={<Signup needsAdditionalInfo={needsAdditionalInfo} setNeedsAdditionalInfo={setNeedsAdditionalInfo}/>} />
 
           <Route path="/listings/:id" element={<ListingView
             
