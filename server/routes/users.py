@@ -10,3 +10,8 @@ user_bp = Blueprint('users', __name__)
 def get_all():
     result = controllers.GetAllUserControl()
     return result
+
+@user_bp.route('/<string:id>/')
+def get_single(id):
+    result = controllers.GetUser(id)
+    return result

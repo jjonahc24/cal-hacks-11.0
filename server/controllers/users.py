@@ -1,23 +1,21 @@
 import extensions
-from bson import objectid
+from bson import ObjectId
 from flask import jsonify
 
 def GetAllUserControl():
     try:
         result = GetAllUsers()
-        
         return jsonify(result), 200
-    
     except:
         return 500
 
-def GetUserControl():
+def GetUserControl(id):
     try:
+        result = GetUser(id)
         return jsonify(result), 200
     except:
         return 500
 
-# Returns Pydantic Model
 def GetAllUsers():
     try:
         user_collect = extensions.mongo.cx["Calhacks11"].User.find({})
@@ -26,7 +24,6 @@ def GetAllUsers():
         for user_data in user_list:
             user_data['_id'] = str(user_data['_id'])
             result["users"].append(user_data)
-
         
         return result
 
@@ -36,10 +33,11 @@ def GetAllUsers():
 def GetUser(id):
     try:
         # Search for the document in the 'users' collection by _id
-        user_data = mongo.db.users.find_one({'_id': ObjectId(id)})
+        user_data = extensions.mongo.db.User.find_one({'_id': ObjectId(id)})
 
         if user_data:
-            user = UserModel(**user_data)
+            user_data["_id"] = str(user_data["_id"])
+            return user_data
     
     except Exception as e:
         return {'error': str(e)}
