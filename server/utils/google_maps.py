@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-test_address = "Arizona"
+test_address = "2000 Durant Ave"
 
 # Initialize the client with your API key
 def address_to_coordinates(address = test_address):
@@ -13,11 +13,8 @@ def address_to_coordinates(address = test_address):
     # Geocoding an address
     geocode_result = gmaps.geocode(address)
 
-    # print(geocode_result)
-
     # Extract latitude and longitude
     location = geocode_result[0]['geometry']['location']
     lat, lng = location['lat'], location['lng']
 
-    print(f"Latitude: {lat}, Longitude: {lng}")
     return (lat, lng)

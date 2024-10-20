@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from './components/navbar/navbar';  // Import the Navbar component
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './Pages/landing_page';
@@ -7,6 +7,7 @@ import ListingPage from './Pages/create_listing';
 import ListingsPage from "./Pages/listings_page";
 import ProfilePage from "./Pages/profile_page"
 import ListingView from "./Pages/listing_view.js";
+import Signup from "./Pages/signup";
 
 function App() {
   const [searchedLocation, setSearchedLocation] = useState("");
@@ -20,27 +21,49 @@ function App() {
   const [firstName, setFirstName] = useState([]);
   const [lastName, setLastName] = useState([]);
 
-
-  // 
-  const [isUserAuthenthicated, setUserAuthenthicated] = useState(true);
-  const [isSellerAuthenthicated, setSellerAuthenthicated] = useState(false);
+  // User authenthication states 
   const [profileToggled, setProfileToggled] = useState(false);
+  // const { user, isAuthenticated, isLoading } = useAuth0();
+  // const [dbUser, setDbUser] = useState(null);
+  // const [needsAdditionalInfo, setNeedsAdditionalInfo] = useState(false);
+
+  // useEffect(() => {
+  //   const checkUserInDb = async () => {
+  //     if (isAuthenticated && user) {
+  //       try {
+  //         const response = await fetch(...);
+  //         const data = await response.json();
+          
+  //         if (!data || !data.firstName || !data.lastName) {
+  //           setNeedsAdditionalInfo(true); 
+  //         }
+
+  //         setDbUser(data); 
+
+  //       } catch (error) {
+  //         console.log(error); 
+  //       }
+  //     }
+  //   }
+
+  //   checkUserInDb(); // keep conditionally checking user in db when we get authenticated 
+  // }, [isAuthenticated, user])
+
+  // if (isLoading) { return <div>Loading...</div>; } 
 
   return (
     <div className="App p-10 h-full w-full">
       <Router>
-        <Navbar isUserAuthenthicated={isUserAuthenthicated}
-          setUserAuthenthicated={setUserAuthenthicated}
+        <Navbar
           profileToggled={profileToggled}
           setProfileToggled={setProfileToggled} />
 
         <Routes>
-          <Route path="/" element={<LandingPage
+          <Route path="/" element={
+            <LandingPage
             setSearchedLocation={setSearchedLocation}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
-            isUserAuthenthicated={isUserAuthenthicated}
-            setUserAuthenthicated={setUserAuthenthicated}
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
@@ -55,11 +78,11 @@ function App() {
             setEndDate={setEndDate}
             searchedLocation={searchedLocation}
             listings={listings}
-            isUserAuthenthicated={isUserAuthenthicated}
-            setUserAuthenthicated={setUserAuthenthicated}
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
+
+          <Route path="/sign-up" element={<Signup />} />
 
           <Route path="/listings/:id" element={<ListingView
             

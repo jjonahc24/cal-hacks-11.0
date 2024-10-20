@@ -4,7 +4,7 @@ from models.listings import ListingModel, TimeFrameModel
 from utils.google_maps import address_to_coordinates
 from bson import ObjectId
 from utils.google_maps import address_to_coordinates
-from utils.location_bounds import calculate_bounding_box
+from utils.location_bounds import calculate_bounding_box, haversine_distance
 
 def rent_listing_control(id, request_json):
     try:
@@ -14,6 +14,7 @@ def rent_listing_control(id, request_json):
 
 #def clear_listing_control(id):
 
+    
 def create(data):
     try:
         #validation
@@ -50,7 +51,7 @@ def get(id_filter = None,
         end_date_filter = None):
     try:
         filter_queries = {}
-
+        lat, lng = 0, 0
         #construting filter queries
         if id_filter:
             filter_queries['_id'] = ObjectId(id_filter)
@@ -78,8 +79,12 @@ def get(id_filter = None,
         for listing in res:
             listing['_id'] = str(listing['_id'])
             listing['owner_id'] = str(listing['owner_id'])
+            
+            #add distance field when filtering by address
+            if address_filter:
+                listing['distance'] = haversine_distance(listing['latitude'], listing['longitude'], lat, lng)
             listings.append(listing)
-        
+
         #filter date ranges
         if start_date_filter or end_date_filter:
             date_filtered_listings = []
@@ -91,7 +96,6 @@ def get(id_filter = None,
                         if ((time['start_date'] >= start_date_filter) and (time['end_date'] <= end_date_filter)) or \
                             ((time['start_date'] <= start_date_filter) and (time['end_date'] > start_date_filter)) or \
                             ((time['start_date'] < end_date_filter) and (time['end_date'] >= end_date_filter)):
-                            print("skipped")
                             skip = True
                             break
                     if not skip:
