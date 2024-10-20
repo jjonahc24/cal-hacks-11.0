@@ -1,9 +1,48 @@
 import React, { useState, useRef, useEffect } from 'react';
 import User from "../Assets/user_two.png";
+import { useAuth0 } from "@auth0/auth0-react";
+import {useNavigate} from "react-router-dom";
 
 function Signup(props) {
+
   const [photo, setPhoto] = useState(null); // State to store the uploaded photo
   const fileInputRef = useRef(null); // Reference to the hidden file input
+  const [firstName, setFirstName] = useState(''); // State for first name
+  const [lastName, setLastName] = useState(''); // State for last name
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch("http://127.0.0.1:8000/user/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",  // Specify that you're sending JSON
+        },
+        body: JSON.stringify({ 
+          "email": user.email, 
+          "first_name": firstName, 
+          "last_name": lastName, 
+          "profile_picture_path": photo, 
+          "username": "" 
+        }),  // Stringify the body data
+      });
+      
+      const data = await response.json();
+      
+      if (data) {
+        console.log("Successfully created user:", data);
+      } else {
+        console.log("Error creating user:", data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    props.setNeedsAdditionalInfo(false); 
+    navigate("/"); 
+  };
 
   // Disable scroll on mount and enable scroll on unmount
   useEffect(() => {
@@ -50,9 +89,23 @@ function Signup(props) {
             accept="image/*" // Only allow image file types
           />
         </div>
-        <input className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none" type='text' placeholder='First Name' />
-        <input className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none" type='text' placeholder='Last Name' />
-        <button className="p-2 bg-customGray text-white rounded">Signup</button>
+        {/* First Name Input */}
+        <input 
+          className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none" 
+          type='text' 
+          placeholder='First Name'
+          value={firstName}  // Bind state to value
+          onChange={(e) => setFirstName(e.target.value)} // Update state on input change
+        />
+        {/* Last Name Input */}
+        <input 
+          className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none" 
+          type='text' 
+          placeholder='Last Name'
+          value={lastName}  // Bind state to value
+          onChange={(e) => setLastName(e.target.value)} // Update state on input change
+        />
+        <button className="p-2 bg-customGray text-white rounded" onClick={handleSubmit}>Signup</button>
       </div>
     </div>
   );
