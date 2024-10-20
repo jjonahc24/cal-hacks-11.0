@@ -71,3 +71,16 @@ def get(id_filter = None, owner_id_filter = None, address_filter = None):
     
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+    
+def delete(id):
+    try:
+        #attempt to delete listing
+        res = mongo.db.Listing.delete_one({"_id": ObjectId(id)})
+
+        if res.deleted_count > 0:
+            return jsonify({"msg": "success",
+                            "deleted_count": res.deleted_count}), 200
+        else:
+            return jsonify({"error": f"{res.deleted_count} objects deleted."}), 400
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
