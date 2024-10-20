@@ -20,7 +20,15 @@ def GetUserControl(id):
 
 def AddUserControl(request_json):
     try:
-        return jsonify(AddUser(request_json)), 200 
+        result = AddUser(request_json)
+        return jsonify(result), 200 
+    except:
+        return 500
+
+def GetUserEmailControl(request_json):
+    try:
+        result = GetUserEmail(request_json)
+        return jsonify(result), 200 
     except:
         return 500
 
@@ -57,9 +65,19 @@ def AddUser(request_json):
         user = models.UserModel(**request_json)
         user_dict = utils.Convert_model(user)
         res = user_collect.insert_one(user_dict)
-        return str(res.inserted_id), 200 
+        user_dict["_id"] = str(res.inserted_id)
+        return user_dict
 
     except Exception as e:
         return {'error': str(e)}
 
+def GetUserEmail(request_json):
+    try:
+        user_data = extensions.mongo.db.User.find_one({'email': request_json.get('email')})
+        
+        if (user_data):
+            user_data['_id'] = str(user_data['_id'])
+            return user_data
 
+    except Exception as e:
+        return {'error': str(e)}
