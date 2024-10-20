@@ -2,9 +2,9 @@ from flask import Blueprint, request
 import controllers
 
 def register_users(app):
-    app.register_blueprint(user_bp, url_prefix='/users')
+    app.register_blueprint(user_bp, url_prefix='/user')
 
-user_bp = Blueprint('users', __name__)
+user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/', methods = ['GET', 'POST'])
 def get_all():

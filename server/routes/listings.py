@@ -2,9 +2,9 @@ from flask import Blueprint, request
 import controllers
 
 def register_listings(app):
-    app.register_blueprint(listing_bp, url_prefix='/listings')
+    app.register_blueprint(listing_bp, url_prefix='/listing')
 
-listing_bp = Blueprint('listings', __name__)
+listing_bp = Blueprint('listing', __name__)
 
 @listing_bp.route('/', methods = ['GET'])
 def get_listings():
