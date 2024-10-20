@@ -10,9 +10,9 @@ class RentHistoryModel(BaseModel):
 class UserModel(BaseModel):
     _id: str = None
     username: str = "default_user"
-    password: str = "default_password"
     first_name: str = "default_fn"
     last_name: str = "default_ln"
+    email: str = ""
     profile_picture_path: str = "default_path"
     listings: list[str] = []
     rating: float = 100

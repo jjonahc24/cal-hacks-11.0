@@ -15,7 +15,12 @@ def get_all():
         result = controllers.GetAllUserControl()
         return result
 
-@user_bp.route('/<string:id>/')
+@user_bp.route('/<string:id>')
 def get_single(id):
     result = controllers.GetUserControl(id)
+    return result
+
+@user_bp.route('/getUserEmail', methods = ['POST'])
+def get_user_email():
+    result = controllers.GetUserEmailControl(request.json)
     return result

@@ -1,11 +1,19 @@
 from extensions.extensions import mongo
 from flask import jsonify, request
-from models.listings import ListingModel
+from models.listings import ListingModel, TimeFrameModel
 from utils.google_maps import address_to_coordinates
 from bson import ObjectId
 from utils.google_maps import address_to_coordinates
 from utils.location_bounds import calculate_bounding_box
-    
+
+def rent_listing_control(id, request_json):
+    try:
+        return jsonify(rent(id, request_json)), 200 
+    except:
+        return 500
+
+#def clear_listing_control(id):
+
 def create(data):
     try:
         #validation
@@ -84,3 +92,30 @@ def delete(id):
             return jsonify({"error": f"{res.deleted_count} objects deleted."}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 400
+
+def rent(id, request_json):
+    time_frame_data = request_json
+    time_frame = TimeFrameModel(**time_frame_data)
+    time_frame_dict = time_frame.dict()
+    
+    # Perform the update in MongoDB by appending the new time frame
+    result = mongo.db.Listing.update_one(
+        {"_id": ObjectId(id)},  # Match the listing by _id
+        {"$push": {"time_frame": time_frame_dict}}  # Append the new time frame
+    )
+
+    if result.matched_count == 0:
+        return {"error": "Listing not found"}
+    
+    rent_history_dict = {
+        "listing_id": id,
+        "start_date": time_frame.start_date,
+        "end_date": time_frame.end_date
+    }
+
+    mongo.db.User.update_one(
+        {"_id": ObjectId(time_frame.renter_id)},  
+        {"$push": {"rent_history": rent_history_dict}}  
+    )
+    
+    return {"message": "success"}
