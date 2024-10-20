@@ -27,6 +27,7 @@ def create(data):
         new_listing = ListingModel(
             photo_path = input_data.photo_path,
             hourly_rate = input_data.hourly_rate,
+            time_frame = input_data.time_frame,
             address = input_data.address,
             latitude = lat,
             longitude = lng,
@@ -42,7 +43,11 @@ def create(data):
     except Exception as e:
         return jsonify({"error": str(e)}), 400
     
-def get(id_filter = None, owner_id_filter = None, address_filter = None):
+def get(id_filter = None, 
+        owner_id_filter = None, 
+        address_filter = None,
+        start_date_filter = None,
+        end_date_filter = None):
     try:
         filter_queries = {}
 
@@ -75,6 +80,44 @@ def get(id_filter = None, owner_id_filter = None, address_filter = None):
             listing['owner_id'] = str(listing['owner_id'])
             listings.append(listing)
         
+        #filter date ranges
+        if start_date_filter or end_date_filter:
+            date_filtered_listings = []
+            skip = False
+            if start_date_filter and end_date_filter:
+                for listing in listings:
+                    skip = False
+                    for time in listing['time_frame']:
+                        if ((time['start_date'] >= start_date_filter) and (time['end_date'] <= end_date_filter)) or \
+                            ((time['start_date'] <= start_date_filter) and (time['end_date'] > start_date_filter)) or \
+                            ((time['start_date'] < end_date_filter) and (time['end_date'] >= end_date_filter)):
+                            print("skipped")
+                            skip = True
+                            break
+                    if not skip:
+                        date_filtered_listings.append(listing)
+            elif start_date_filter:
+                for listing in listings:
+                    skip = False
+                    for time in listing['time_frame']:
+                        if (start_date_filter >= time['start_date']) and (start_date_filter < time['end_date']):
+                            skip = True
+                            break
+                    if not skip:
+                        date_filtered_listings.append(listing)
+            elif end_date_filter:
+                for listing in listings:
+                    skip = False
+                    for time in listing['time_frame']:
+                        if (end_date_filter > time['start_date']) and (end_date_filter <= time['end_date']):
+                            skip = True
+                            break
+                    if not skip:
+                        date_filtered_listings.append(listing)
+
+            listings = date_filtered_listings
+
+            
         return jsonify(listings), 200
     
     except Exception as e:

@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './Pages/landing_page';
 import ListingPage from './Pages/create_listing';
 import ListingsPage from "./Pages/listings_page";
+import ProfilePage from "./Pages/profile_page"
+import ListingView from "./Pages/listing_view.js";
 
 function App() {
   const [searchedLocation, setSearchedLocation] = useState("");
@@ -42,6 +44,8 @@ function App() {
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
+          
+          <Route path="/profile" element={<ProfilePage/>}/>
 
           <Route path="/create-listing" element={<ListingPage />} />
 
@@ -55,6 +59,10 @@ function App() {
             setUserAuthenthicated={setUserAuthenthicated}
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
+          />} />
+
+          <Route path="/listings/:id" element={<ListingView
+            
           />} />
         </Routes>
       </Router>

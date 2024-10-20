@@ -1,3 +1,4 @@
+import "./navbar.css"
 import React, { useState } from 'react';
 import {useNavigate} from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -6,7 +7,7 @@ import Profile from '../landing_page/profile';
 import ProfileDropDown from '../landing_page/profile_dropdown';
 import ProfileDropDown_SignedIn from '../landing_page/profile_dropdown_signedin';
 
-const Navbar = () => {
+const Navbar = (props) => {
     // const [isUserAuthenthicated, setUserAuthenthicated] = useState(true);
     // const [isSellerAuthenthicated, setSellerAuthenthicated] = useState(false);
     const [profileToggled, setProfileToggled] = useState(false);
@@ -16,9 +17,9 @@ const Navbar = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="flex justify-between items-center w-full px-10 relative"> {/* Added relative to the main container */}
+        <div className="NavBar flex justify-between items-center w-full px-10 relative"> {/* Added relative to the main container */}
             <div className="flex items-center cursor-pointer" onClick={() => navigate("/")}>
-                <h2 className="font-roboto text-xl">Find⋅My⋅Spot</h2>
+                <h2 className="logo text-[2rem] text-[#16B364]">spot.</h2>
                 {/* {isAuthenticated ? (
                     <h2>{user.name}</h2>
                 ) : null} */}
