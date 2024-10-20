@@ -7,6 +7,9 @@ module.exports = {
     extend: {
       fontFamily: {
         'roboto': ['Roboto', 'sans-serif'],
+      }, 
+      colors: {
+        customGray: '#16B364', // Added the # for the hex color value
       },
     },
   },
