@@ -1,6 +1,7 @@
 import MyGoogleMap from "../components/my_google_map.js";
 import SearchBar from "../components/search_bar.js"
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import downIcon from "../Assets/down-icon.svg";
 import rightIcon from "../Assets/right-icon.svg";
 import starIcon from "../Assets/star-fill.svg";
@@ -56,6 +57,8 @@ let testListings = [
 const ListingsPage = (props) => {
     const [listingsExpanded, setListingsExpanded] = useState([]);
 
+    const navigate = useNavigate();
+
     return (
         <div className="w-full h-full overflow-hidden flex justify-center flex-col relative ">
             <SearchBar
@@ -70,7 +73,7 @@ const ListingsPage = (props) => {
                             Available Listings in <span className="text-[#34C759]">{props.searchedLocation}</span>
                         </h1>
                     </div>
-                    <hr className="w-4/5 mb-2 border-[#34C759]"></hr>
+                    <hr className="w-4/5 mb-2 border-[#16B364]"></hr>
                     {testListings.map((listing, index) => {
                         return (
                             <div key={index} className="w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4">
@@ -93,7 +96,7 @@ const ListingsPage = (props) => {
 
                                 {listingsExpanded.includes(listing.id) &&
                                     <div className="flex flex-col">
-                                        <div className="flex flex-row gap-4 ">
+                                        <div className="flex flex-row gap-4 justify-start">
                                             <div className="h-[10rem] w-full min-w-[40%]">
                                                 <img alt="parking-photo" src={listing.photoPath}></img>
                                             </div>
@@ -106,7 +109,7 @@ const ListingsPage = (props) => {
                                             </div>
                                         </div>
                                         <div className="flex flex-row w-full justify-between">
-                                            <button className="rounded-lg text-white w-[10rem] p-1 text-[12px] bg-[#16B364] hover:scale-[0.99] transition">
+                                            <button onClick={() => navigate(`/listings/${listing.id}`)} className="rounded-lg text-white w-[10rem] p-1 text-[12px] bg-[#16B364] hover:scale-[0.99] transition">
                                                 View Listing
                                             </button>
                                             <div className="rating flex-row flex gap-4 items-center">

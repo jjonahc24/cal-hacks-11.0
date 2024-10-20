@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import downIcon from "../Assets/down-icon.svg";
 import rightIcon from "../Assets/right-icon.svg";
 
@@ -54,7 +54,7 @@ let testListings = [
   },
 ];
 
-const ProfilePage = () => {
+const ProfilePage = (props) => {
   const [listingsExpanded, setListingsExpanded] = useState([]);
 
   const toggleListing = (listingId) => {
