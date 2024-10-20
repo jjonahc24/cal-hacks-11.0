@@ -28,10 +28,11 @@ def GetAllUsers():
     try:
         user_collect = extensions.mongo.cx["Calhacks11"].User.find({})
         user_list = list(user_collect)
+
         result = {"users": []} 
         for user_data in user_list:
-            user_data = models.UserModel(**user_data)
-            result["users"].append(utils.convert_model(user_data))
+            user_data["_id"] = str(user_data["_id"])
+            result["users"].append(user_data)
         
         return result
 
@@ -44,8 +45,8 @@ def GetUser(id):
         user_data = extensions.mongo.db.User.find_one({'_id': ObjectId(id)})
         
         if user_data:
-            user_data = models.UserModel(**user_data) 
-            return utils.Convert_model(user_data)
+            user_data['_id'] = str(user_data['_id'])
+            return user_data
     
     except Exception as e:
         return {'error': str(e)}
@@ -56,7 +57,7 @@ def AddUser(request_json):
         user = models.UserModel(**request_json)
         user_dict = utils.Convert_model(user)
         res = user_collect.insert_one(user_dict)
-        return str(res.inserted_id) 
+        return str(res.inserted_id), 200 
 
     except Exception as e:
         return {'error': str(e)}
