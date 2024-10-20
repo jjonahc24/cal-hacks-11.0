@@ -62,6 +62,7 @@ function App() {
 
   if (isLoading) { return <div>Loading...</div>; } 
 
+
   return (
     <div className="App p-10 h-full w-full">
       <Router>
@@ -75,6 +76,7 @@ function App() {
             setSearchedLocation={setSearchedLocation}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            setListings={setListings}
             profileToggled={profileToggled}
             setProfileToggled={setProfileToggled}
           />} />
@@ -87,6 +89,7 @@ function App() {
             setSearchedLocation={setSearchedLocation}
             setStartDate={setStartDate}
             setEndDate={setEndDate}
+            setListings={setListings}
             searchedLocation={searchedLocation}
             listings={listings}
             profileToggled={profileToggled}

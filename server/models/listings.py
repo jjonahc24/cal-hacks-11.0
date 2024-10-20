@@ -14,6 +14,8 @@ class ListingModel(BaseModel):
     hourly_rate: float
     time_frame: List[TimeFrameModel] = []
     address: str
+    city: str = ""
+    state: str = ""
     latitude: float = 0
     longitude: float = 0
     description: str = ""

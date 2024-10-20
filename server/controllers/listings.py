@@ -1,9 +1,8 @@
 from extensions.extensions import mongo
 from flask import jsonify, request
 from models.listings import ListingModel, TimeFrameModel
-from utils.google_maps import address_to_coordinates
 from bson import ObjectId
-from utils.google_maps import address_to_coordinates
+from utils.google_maps import get_address_info
 from utils.location_bounds import calculate_bounding_box, haversine_distance
 
 def rent_listing_control(id, request_json):
@@ -22,14 +21,16 @@ def create(data):
         
         if not input_data.address:
             raise ValueError("Address cannot be empty")
-        # convert to long and lat
-        lat, lng = address_to_coordinates(input_data.address)
+        # convert to long and lat and other address info
+        lat, lng, address, address_city, address_state = get_address_info(input_data.address)
 
         new_listing = ListingModel(
             photo_path = input_data.photo_path,
             hourly_rate = input_data.hourly_rate,
             time_frame = input_data.time_frame,
-            address = input_data.address,
+            address = address,
+            city = address_city,
+            state = address_state,
             latitude = lat,
             longitude = lng,
             description = input_data.description,
@@ -58,7 +59,7 @@ def get(id_filter = None,
         if owner_id_filter:
             filter_queries['owner_id'] = ObjectId(owner_id_filter)
         if address_filter:
-            lat, lng = address_to_coordinates(address_filter)
+            lat, lng, x, y, z = get_address_info(address_filter)
             radius = 1 #1km = 0.6m
             bounding = calculate_bounding_box(lat, lng, radius)
             
@@ -127,6 +128,29 @@ def get(id_filter = None,
     except Exception as e:
         return jsonify({"error": str(e)}), 400
     
+def get_one(id):
+    try:
+        if not id:
+            return jsonify({"msg": "error",
+                           "description": "id not found"}), 404
+        
+        #fetch listings
+        res = mongo.db.Listing.find({"_id": ObjectId(id)})
+
+        #convert ObjectID to strings
+        listings = []
+        for listing in res:
+            listing['_id'] = str(listing['_id'])
+            listing['owner_id'] = str(listing['owner_id'])
+            
+            listings.append(listing)
+
+        return jsonify(listings[0]), 200
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+    
+
 def delete(id):
     try:
         #attempt to delete listing
@@ -166,3 +190,5 @@ def rent(id, request_json):
     )
     
     return {"message": "success"}
+
+
