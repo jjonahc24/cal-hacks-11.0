@@ -57,22 +57,31 @@ const SearchBar = (props) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log(startDateInput, endDateInput)  
-  }, [startDateInput, endDateInput])
+  // useEffect(() => {
+  //   console.log(formatDate(startDateInput), endDateInput)  
+  // }, [startDateInput, endDateInput])
+
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // parse dates
-    
+    let startDateFormatted = formatDate(startDateInput);
+    let endDateFormatted = formatDate(endDateInput);
 
-    const filteredListings = await fetch(`http://localhost:8000/listing?address=${locationInput}&start_date=${startDateInput}&end_date=${endDateInput}`)
-
-    
-    
-
-    
+    const response = await fetch(`http://localhost:8000/listing?address=${locationInput}&start_date=${startDateFormatted}&end_date=${endDateFormatted}`)
+    if (response.ok) {
+      const responseJSON = await response.json();
+      console.log(responseJSON);
+    }
 
     props.setSearchedLocation(locationInput);
     props.setStartDate(startDateInput);
