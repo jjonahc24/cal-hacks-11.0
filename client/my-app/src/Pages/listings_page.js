@@ -35,42 +35,42 @@ const ListingsPage = (props) => {
                             <div key={index} className="w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4">
                                 <div className="flex flex-row w-full justify-between ">
                                     <div className="flex flex-row items-center gap-3">
-                                        <img className="w-[40px] h-[40px] rounded-full" alt="owner-picture" src={listing.ownerPicture}></img>
-                                        <p className="p-0 m-0 text-[1rem]">{listing.ownerName}</p>
+                                        <img className="w-[40px] h-[40px] rounded-full" alt="owner-picture" src={listing.owner_picture}></img>
+                                        <p className="p-0 m-0 text-[1rem]">{listing.owner_name}</p>
                                     </div>
                                     <div className="flex flex-row gap-3 items-center">
-                                        <p className="p-0 m-0 text-[1rem] text-[#6C6969]">${listing.moneyRate}</p>
+                                        <p className="p-0 m-0 text-[1rem] text-[#6C6969]">${listing.hourly_rate}</p>
                                         <div className="w-[20px] h-[20px] cursor-pointer">
                                             {
-                                                listingsExpanded.includes(listing.id) ?
-                                                    <img src={downIcon} alt="down-icon" onClick={() => setListingsExpanded((prev) => prev.filter((listingId) => listingId !== listing.id))} /> :
-                                                    <img className="ml-1" src={rightIcon} alt="right-icon" onClick={() => setListingsExpanded((prev) => [...prev, listing.id])} />
+                                                listingsExpanded.includes(listing._id) ?
+                                                    <img src={downIcon} alt="down-icon" onClick={() => setListingsExpanded((prev) => prev.filter((listingId) => listingId !== listing._id))} /> :
+                                                    <img className="ml-1" src={rightIcon} alt="right-icon" onClick={() => setListingsExpanded((prev) => [...prev, listing._id])} />
                                             }
                                         </div>
                                     </div>
                                 </div>
 
-                                {listingsExpanded.includes(listing.id) &&
+                                {listingsExpanded.includes(listing._id) &&
                                     <div className="flex flex-col">
                                         <div className="flex flex-row gap-4 justify-start">
-                                            <div className="h-[10rem] w-full min-w-[40%]">
-                                                <img alt="parking-photo" src={listing.photoPath}></img>
+                                            <div className="h-[10rem] w-[50%] min-w-[40%]">
+                                                <img alt="parking-photo" src={listing.photo_path}></img>
                                             </div>
                                             <div className="flex flex-col items-start text-[14px] text-start">
                                                 <h2 className="p-0 m-0 text-[#16B364]">{listing.address}</h2>
-                                                <p className=" text-[#6C6969]">{listing.distanceFromTarget} mi away</p>
+                                                <p className=" text-[#6C6969]">{listing.distance.toFixed(2)} mi away</p>
                                                 <p className="">
                                                     {listing.description}
                                                 </p>
                                             </div>
                                         </div>
                                         <div className="flex flex-row w-full justify-between">
-                                            <button onClick={() => navigate(`/listings/${listing.id}`)} className="rounded-lg text-white w-[10rem] p-1 text-[12px] bg-[#16B364] hover:scale-[0.99] transition">
+                                            <button onClick={() => navigate(`/listings/${listing._id}`)} className="rounded-lg text-white w-[10rem] p-1 text-[12px] bg-[#16B364] hover:scale-[0.99] transition">
                                                 View Listing
                                             </button>
                                             <div className="rating flex-row flex gap-4 items-center">
                                                 <p>
-                                                    {listing.listingRating}
+                                                    {listing.listing_rating.toFixed(1)}
                                                 </p>
                                                 <img src={starIcon} alt="star-icon"></img>
                                             </div>

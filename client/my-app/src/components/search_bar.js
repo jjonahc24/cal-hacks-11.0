@@ -73,25 +73,29 @@ const SearchBar = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // parse dates
-    let startDateFormatted = formatDate(startDateInput);
-    let endDateFormatted = formatDate(endDateInput);
+    try {
 
-    const response = await fetch(`http://localhost:8000/listing?address=${locationInput}&start_date=${startDateFormatted}&end_date=${endDateFormatted}`)
-    if (response.ok) {
-      const responseJSON = await response.json();
-      console.log(responseJSON);
+      let startDateFormatted = formatDate(startDateInput);
+      let endDateFormatted = formatDate(endDateInput);
+
+      let responseJSON = null;
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}listing?address=${locationInput}&start_date=${startDateFormatted}&end_date=${endDateFormatted}`)
+      if (response.ok) {
+        responseJSON = await response.json();
+      }
+  
+      if (responseJSON) {
+        props.setSearchedLocation(locationInput);
+        props.setStartDate(startDateInput);
+        props.setEndDate(endDateInput);
+    
+        props.setListings(responseJSON);
+        navigate("/listings")
+      }
+
+    } catch (err) {
+      console.log(err.message);
     }
-
-    props.setSearchedLocation(locationInput);
-    props.setStartDate(startDateInput);
-    props.setEndDate(endDateInput);
-
-    setTimeout(() => {
-      props.setListings(testListings);
-      navigate("/listings")
-    }, 1000)
-
   }
 
   return (
