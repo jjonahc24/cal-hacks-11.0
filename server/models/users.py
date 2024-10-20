@@ -8,7 +8,7 @@ class RentHistoryModel(BaseModel):
     end_date: str
 
 class UserModel(BaseModel):
-    id: str = ""
+    id: str = None
     username: str = "default_user"
     password: str = "default_password"
     first_name: str = "default_fn"

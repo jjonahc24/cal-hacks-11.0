@@ -20,7 +20,7 @@ def GetUserControl(id):
 
 def AddUserControl(request_json):
     try:
-        return AddUser(request_json) 
+        return jsonify(AddUser(request_json)), 200 
     except:
         return 500
 
@@ -55,9 +55,8 @@ def AddUser(request_json):
         user_collect = extensions.mongo.db.User
         user = models.UserModel(**request_json)
         user_dict = utils.Convert_model(user)
-        user_dict.pop('id')
-        user_collect.insert_one(user_dict)
-        return user.id, 200 
+        res = user_collect.insert_one(user_dict)
+        return str(res.inserted_id) 
 
     except Exception as e:
         return {'error': str(e)}
