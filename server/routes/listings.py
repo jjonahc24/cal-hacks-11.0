@@ -15,6 +15,10 @@ def get_listings():
     end_date_filter = request.args.get('end_date')
     return controllers.get(id_filter, owner_id_filter, address_filter, start_date_filter, end_date_filter)
 
+@listing_bp.route('/<id>', methods = ['GET'])
+def get_one_listings(id):
+    return controllers.get_one(id)
+
 @listing_bp.route('/create', methods = ['POST'])
 def create_listing():
     return controllers.create(request.get_json())
