@@ -1,17 +1,45 @@
-import { v4 as uuidv4 } from 'uuid';
 import React, { useState, useRef } from 'react';
 import Slider from '../components/shadui/slider';
 import MyDatePicker from '../components/shadui/date_picker';
 import UploadImage from '../Assets/cloud-computing.png';
 
-const ListingPage = () => {
-  const id = uuidv4();
+const ListingPage = (props) => {
   const [address, setAddress] = useState('');
   const [photo, setPhoto] = useState(null);
-  const [moneyRate, setMoneyRate] = useState('');
+  const [moneyRate, setMoneyRate] = useState(33); // Initial slider value
   const [timeFrames, setTimeFrames] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [description, setDescription] = useState('');
+  const [listingname, setListingName] = useState(''); // State for listing name
+
+  // Function to handle listing name change
+  const handleListingNameChange = (event) => {
+    setListingName(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/listing/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",  // Specify that you're sending JSON
+        },
+        body: JSON.stringify({
+          "owner_id": props.dbUser._id, 
+          "owner_name": props.dbUser.first_name + " " + props.dbUser.last_name,
+          "hourly_rate": moneyRate,  // Send the current moneyRate value
+          "address": address, 
+          "description": description,
+          "listing_name": listingname,  // Include listing name in the request body
+        }),
+      }); 
+    } catch (error) {
+      console.log(error); 
+    }
+  };
 
   // Reference to the hidden file input
   const fileInputRef = useRef(null);
@@ -30,17 +58,13 @@ const ListingPage = () => {
     }
   };
 
-  const handleMoneyRateChange = (event) => {
-    setMoneyRate(event.target.value);
+  // Handle slider value change
+  const handleMoneyRateChange = (value) => {
+    setMoneyRate(value[0]); // The slider returns an array, set the first value
   };
 
   const handleTimeFramesChange = (event) => {
     setTimeFrames(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Form submitted:', { id, address, photo, moneyRate, timeFrames });
   };
 
   const handleImageClick = () => {
@@ -52,6 +76,18 @@ const ListingPage = () => {
       <div className="w-full max-w-md">
         <h1 className="text-center mb-4 text-3xl">List your parking spot</h1>
         <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
+          {/* Listing Name Input */}
+          <label className="w-full">
+            <input
+              className="border-b-4 border-grey pt-2 pb-2 pl-2 focus:outline-none w-full"
+              type="text"
+              value={listingname}
+              onChange={handleListingNameChange} // Add the change handler
+              placeholder="Enter listing name"
+            />
+          </label>
+
+          {/* Address Input */}
           <label className="w-full">
             <input
               className="border-b-4 border-grey pt-2 pb-2 pl-2 focus:outline-none w-full"
@@ -62,6 +98,8 @@ const ListingPage = () => {
             />
           </label>
           <br />
+          
+          {/* Photo Upload Section */}
           <div className="w-full flex justify-center">
             <div className="text-center w-full">
               <label className="block mb-2">Upload Photo:</label>
@@ -84,17 +122,26 @@ const ListingPage = () => {
             </div>
           </div>
           <br />
+
+          {/* Rate Slider */}
           <label className="w-full">
-            <Slider defaultValue={[33]} max={100} step={1} />
+            <Slider 
+              defaultValue={[moneyRate]} // Set the initial value to the current moneyRate
+              max={100} 
+              step={1} 
+              onValueChange={handleMoneyRateChange} // Handle slider change
+            />
+            <div className="text-center mt-2">Rate: ${moneyRate}/hour</div>
           </label>
           <br />
+          
+          {/* Date Picker */}
           <div className="flex justify-center w-full ">
             <div className="flex items-center">
               <label className="w-[6rem]">Start Date:</label>
               <div className="border-b-4 w-4/12" >
                 <MyDatePicker selectedDate={startDate} setDate={setStartDate}/>
               </div>
-              
             </div>
             <div className="flex items-center">
               <label className="w-[6rem]">End Date:</label>
@@ -103,6 +150,17 @@ const ListingPage = () => {
               </div>
             </div>
           </div>
+
+          {/* Description Input */}
+          <div className='w-full'>
+            <input
+              type='text'
+              className='border-b-4 border-grey pt-2 pb-2 pl-2 focus:outline-none w-full'
+              placeholder='Enter description'
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
           <br />
           <button type="submit" className="mt-4 bg-[#16B364] text-white px-4 py-2 rounded">
             Submit
@@ -114,4 +172,3 @@ const ListingPage = () => {
 };
 
 export default ListingPage;
-

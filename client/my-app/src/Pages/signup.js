@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import User from "../Assets/user_two.png";
 import { useAuth0 } from "@auth0/auth0-react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Signup(props) {
-
   const [photo, setPhoto] = useState(null); // State to store the uploaded photo
   const fileInputRef = useRef(null); // Reference to the hidden file input
+  // const [userName, setUserName] = useState(''); // State for username
   const [firstName, setFirstName] = useState(''); // State for first name
   const [lastName, setLastName] = useState(''); // State for last name
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -20,18 +20,18 @@ function Signup(props) {
         headers: {
           "Content-Type": "application/json",  // Specify that you're sending JSON
         },
-        body: JSON.stringify({ 
-          "email": user.email, 
-          "first_name": firstName, 
-          "last_name": lastName, 
-          "profile_picture_path": photo, 
-          "username": "" 
-        }),  // Stringify the body data
+        body: JSON.stringify({
+          email: user.email,
+          first_name: firstName,
+          last_name: lastName,
+          profile_picture_path: photo, // Send Base64 photo string
+          username: "", // Use the username state
+        }),
       });
-      
+
       const data = await response.json();
-      
-      if (data) {
+
+      if (response.ok) {
         console.log("Successfully created user:", data);
       } else {
         console.log("Error creating user:", data);
@@ -40,14 +40,13 @@ function Signup(props) {
       console.log(error);
     }
 
-    props.setNeedsAdditionalInfo(false); 
-    navigate("/"); 
+    props.setNeedsAdditionalInfo(false);
+    navigate("/");
   };
 
   // Disable scroll on mount and enable scroll on unmount
   useEffect(() => {
     document.body.style.overflow = 'hidden'; // Disable scroll
-
     return () => {
       document.body.style.overflow = 'auto'; // Re-enable scroll when component unmounts
     };
@@ -64,7 +63,7 @@ function Signup(props) {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(event.target.files[0]);
       fileReader.onload = (e) => {
-        setPhoto(e.target.result); // Set the uploaded photo as base64 data
+        setPhoto(e.target.result); // Set the uploaded photo as Base64 data
       };
     }
   };
@@ -89,20 +88,28 @@ function Signup(props) {
             accept="image/*" // Only allow image file types
           />
         </div>
+        {/* Username Input */}
+        {/* <input
+          className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none"
+          type='text'
+          placeholder='Username'
+          value={userName} // Bind state to value
+          onChange={(e) => setUserName(e.target.value)} // Update state on input change
+        /> */}
         {/* First Name Input */}
-        <input 
-          className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none" 
-          type='text' 
+        <input
+          className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none"
+          type='text'
           placeholder='First Name'
-          value={firstName}  // Bind state to value
+          value={firstName} // Bind state to value
           onChange={(e) => setFirstName(e.target.value)} // Update state on input change
         />
         {/* Last Name Input */}
-        <input 
-          className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none" 
-          type='text' 
+        <input
+          className="mb-4 p-2 border-b border-gray-300 rounded focus:outline-none"
+          type='text'
           placeholder='Last Name'
-          value={lastName}  // Bind state to value
+          value={lastName} // Bind state to value
           onChange={(e) => setLastName(e.target.value)} // Update state on input change
         />
         <button className="p-2 bg-customGray text-white rounded" onClick={handleSubmit}>Signup</button>
