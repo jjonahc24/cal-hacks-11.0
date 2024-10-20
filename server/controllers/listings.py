@@ -1,9 +1,8 @@
 from extensions.extensions import mongo
 from flask import jsonify, request
 from models.listings import ListingModel, TimeFrameModel
-from utils.google_maps import address_to_coordinates
 from bson import ObjectId
-from utils.google_maps import address_to_coordinates
+from utils.google_maps import get_address_info
 from utils.location_bounds import calculate_bounding_box, haversine_distance
 
 def rent_listing_control(id, request_json):
@@ -22,14 +21,16 @@ def create(data):
         
         if not input_data.address:
             raise ValueError("Address cannot be empty")
-        # convert to long and lat
-        lat, lng = address_to_coordinates(input_data.address)
+        # convert to long and lat and other address info
+        lat, lng, address, address_city, address_state = get_address_info(input_data.address)
 
         new_listing = ListingModel(
             photo_path = input_data.photo_path,
             hourly_rate = input_data.hourly_rate,
             time_frame = input_data.time_frame,
-            address = input_data.address,
+            address = address,
+            city = address_city,
+            state = address_state,
             latitude = lat,
             longitude = lng,
             description = input_data.description,
