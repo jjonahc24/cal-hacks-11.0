@@ -19,4 +19,4 @@ def create_app():
     
     return app
 
-create_app().run()
+app = create_app()
