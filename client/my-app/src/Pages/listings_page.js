@@ -9,6 +9,7 @@ import starIcon from "../Assets/star-fill.svg";
 
 const ListingsPage = (props) => {
     const [expandedListingId, setExpandedListingId] = useState(null);
+    const [googleLoaded, setGoogleLoaded] = useState(false); // Track Google API availability
 
     const navigate = useNavigate();
 
@@ -24,6 +25,21 @@ const ListingsPage = (props) => {
         setExpandedListingId((prevId) => (prevId === listingId ? null : listingId));
     };
 
+    // Check for window.google availability and set googleLoaded to true
+    useEffect(() => {
+        if (!window.google) {
+            const interval = setInterval(() => {
+                if (window.google) {
+                    setGoogleLoaded(true);
+                    clearInterval(interval);
+                }
+            }, 100); // Check every 100ms
+
+            return () => clearInterval(interval);
+        } else {
+            setGoogleLoaded(true);
+        }
+    }, []);
 
     return (
         <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-5">
@@ -98,15 +114,17 @@ const ListingsPage = (props) => {
                     })}
                 </div>
                 <div className="h-[80%] w-full lg:w-2/3">
-                    <MyGoogleMap listings={props.listings} 
-                    center={expandedListingId 
-                        ? { 
-                            lat: props.listings.find(listing => listing._id === expandedListingId)?.latitude, 
-                            lng: props.listings.find(listing => listing._id === expandedListingId)?.longitude 
-                          } 
-                        : calculatedCenter}
-                    expandedListings={expandedListingId ? [expandedListingId] : []}
-                    />
+                    {googleLoaded && (
+                        <MyGoogleMap listings={props.listings} 
+                            center={expandedListingId 
+                            ? { 
+                                lat: props.listings.find(listing => listing._id === expandedListingId)?.latitude, 
+                                lng: props.listings.find(listing => listing._id === expandedListingId)?.longitude 
+                            } 
+                            : calculatedCenter}
+                        expandedListings={expandedListingId ? [expandedListingId] : []}
+                        />
+                    )}
                 </div>
 
             </div>
