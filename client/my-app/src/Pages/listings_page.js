@@ -114,7 +114,7 @@ const ListingsPage = (props) => {
                     })}
                 </div>
                 <div className="h-[80%] w-full lg:w-2/3">
-                    {googleLoaded && (
+
                         <MyGoogleMap listings={props.listings} 
                             center={expandedListingId 
                             ? { 
@@ -124,7 +124,7 @@ const ListingsPage = (props) => {
                             : calculatedCenter}
                         expandedListings={expandedListingId ? [expandedListingId] : []}
                         />
-                    )}
+
                 </div>
 
             </div>
