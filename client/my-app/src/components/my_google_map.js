@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { GoogleMap as GMap, LoadScript, Marker } from '@react-google-maps/api';
 import expandedMarkerIcon from "../Assets/expanded-marker-icon.svg";
 import normalMarkerIcon from "../Assets/normal-marker-icon.svg";
@@ -7,6 +7,7 @@ const MyGoogleMap = (props) => {
 
   const mapRef = useRef(null);
   const defaultZoom = 14;
+  const [googleLoaded, setGoogleLoaded] = useState(false);
 
   // Update map center when `center` prop changes
   useEffect(() => {
@@ -14,6 +15,14 @@ const MyGoogleMap = (props) => {
       mapRef.current.panTo(props.center);
     }
   }, [props.center]);
+
+  // Set googleLoaded to true when Google Maps API is loaded
+  const handleApiLoad = () => {
+    if (window.google) {
+      console.log("Google Maps API loaded");
+      setGoogleLoaded(true);
+    }
+  };
 
   // Extract coordinates and names from listings
   const getAllCoordinates = useCallback(() => {
@@ -29,7 +38,11 @@ const MyGoogleMap = (props) => {
 
   return (
     <div className="flex justify-center items-center w-full h-full rounded-lg shadow-lg overflow-hidden">
-      <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
+      <LoadScript 
+        googleMapsApiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+        onLoad={handleApiLoad}
+      >
+        {googleLoaded && (
         <GMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={props.center}
@@ -57,6 +70,7 @@ const MyGoogleMap = (props) => {
           ))}
 
         </GMap>
+        )}
       </LoadScript>
     </div>
   );
