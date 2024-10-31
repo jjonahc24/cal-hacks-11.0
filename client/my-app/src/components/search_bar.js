@@ -79,7 +79,7 @@ const SearchBar = (props) => {
       let endDateFormatted = formatDate(endDateInput);
 
       let responseJSON = null;
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}listing?address=${locationInput}&start_date=${startDateFormatted}&end_date=${endDateFormatted}`)
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/listing?address=${locationInput}&start_date=${startDateFormatted}&end_date=${endDateFormatted}`)
       if (response.ok) {
         responseJSON = await response.json();
       }
