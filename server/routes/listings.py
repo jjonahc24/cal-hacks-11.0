@@ -21,6 +21,10 @@ def get_one_listings(id):
 
 @listing_bp.route('/create', methods = ['POST', 'OPTIONS'])
 def create_listing():
+    if request.method == "OPTIONS":
+        # Handle preflight request
+        return '', 204
+     
     return controllers.create(request.get_json())
 
 @listing_bp.route('/delete/<id>', methods = ['DELETE', 'OPTIONS'])

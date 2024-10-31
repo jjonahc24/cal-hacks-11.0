@@ -21,3 +21,4 @@ class UserModel(BaseModel):
     class Config:
         allow_population_by_name = True  # Allow using _id as id
         json_encoders = {ObjectId: str}
+

@@ -12,8 +12,21 @@ const ListingsPage = (props) => {
 
     const navigate = useNavigate();
 
+    // Calculate the average center of all listings
+    const calculatedCenter = props.listings.length > 0
+        ? {
+            lat: props.listings.reduce((sum, listing) => sum + listing.latitude, 0) / props.listings.length,
+            lng: props.listings.reduce((sum, listing) => sum + listing.longitude, 0) / props.listings.length,
+          }
+        : { lat: 37.7749, lng: -122.4194 }; // Default to San Francisco if no listings
+
+    // Find the most recently expanded listing
+    const mostRecentExpandedListing = listingsExpanded.length > 0 
+    ? props.listings.find(listing => listing._id === listingsExpanded[listingsExpanded.length - 1]) 
+    : null;
+
     return (
-        <div className="w-full h-full overflow-hidden flex justify-center flex-col relative ">
+        <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-5">
             <SearchBar
                 setSearchedLocation={props.setSearchedLocation}
                 setStartDate={props.setStartDate}
@@ -85,7 +98,10 @@ const ListingsPage = (props) => {
                     })}
                 </div>
                 <div className="h-[80%] w-full lg:w-2/3">
-                    <MyGoogleMap listings={props.listings}/>
+                    <MyGoogleMap listings={props.listings} 
+                    center={mostRecentExpandedListing ? { lat: mostRecentExpandedListing.latitude, lng: mostRecentExpandedListing.longitude } : calculatedCenter}
+                    expandedListings={listingsExpanded}
+                    />
                 </div>
 
             </div>
