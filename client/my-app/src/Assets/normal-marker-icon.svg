@@ -1,0 +1,12 @@
+<!-- Save as green-parking-pin.svg -->
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer Pin Shape -->
+  <path d="M32 2C17.64 2 6 13.64 6 28C6 41.5 24.9 59.5 31 63C37.1 59.5 56 41.5 56 28C56 13.64 44.36 2 32 2Z" fill="#34C759"/>
+  
+  <!-- Inner Circle Background -->
+  <circle cx="32" cy="28" r="12" fill="white"/>
+  
+  <!-- "P" for Parking -->
+  <text x="32" y="34" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#34C759">P</text>
+</svg>
+
