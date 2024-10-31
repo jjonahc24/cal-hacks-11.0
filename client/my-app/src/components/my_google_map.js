@@ -6,6 +6,7 @@ import normalMarkerIcon from "../Assets/normal-marker-icon.svg";
 const MyGoogleMap = (props) => {
 
   const mapRef = useRef(null);
+  const defaultZoom = 14;
 
   // Update map center when `center` prop changes
   useEffect(() => {
@@ -32,7 +33,7 @@ const MyGoogleMap = (props) => {
         <GMap
           mapContainerStyle={{ width: '100%', height: '100%' }}
           center={props.center}
-          zoom={10}
+          zoom={defaultZoom}
           onLoad={(map) => (mapRef.current = map)}
         >
           {/* Add markers dynamically for each listing */}

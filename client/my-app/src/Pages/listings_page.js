@@ -8,7 +8,7 @@ import starIcon from "../Assets/star-fill.svg";
 
 
 const ListingsPage = (props) => {
-    const [listingsExpanded, setListingsExpanded] = useState([]);
+    const [expandedListingId, setExpandedListingId] = useState(null);
 
     const navigate = useNavigate();
 
@@ -20,10 +20,10 @@ const ListingsPage = (props) => {
           }
         : { lat: 37.7749, lng: -122.4194 }; // Default to San Francisco if no listings
 
-    // Find the most recently expanded listing
-    const mostRecentExpandedListing = listingsExpanded.length > 0 
-    ? props.listings.find(listing => listing._id === listingsExpanded[listingsExpanded.length - 1]) 
-    : null;
+    const handleListingClick = (listingId) => {
+        setExpandedListingId((prevId) => (prevId === listingId ? null : listingId));
+    };
+
 
     return (
         <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-5">
@@ -54,16 +54,16 @@ const ListingsPage = (props) => {
                                     <div className="flex flex-row gap-3 items-center">
                                         <p className="p-0 m-0 text-[1rem] text-[#6C6969]">${listing.hourly_rate}</p>
                                         <div className="w-[20px] h-[20px] cursor-pointer">
-                                            {
-                                                listingsExpanded.includes(listing._id) ?
-                                                    <img src={downIcon} alt="down-icon" onClick={() => setListingsExpanded((prev) => prev.filter((listingId) => listingId !== listing._id))} /> :
-                                                    <img className="ml-1" src={rightIcon} alt="right-icon" onClick={() => setListingsExpanded((prev) => [...prev, listing._id])} />
-                                            }
+                                            {expandedListingId === listing._id ? (
+                                                <img src={downIcon} alt="down-icon" onClick={() => handleListingClick(listing._id)} />
+                                            ) : (
+                                                <img className="ml-1" src={rightIcon} alt="right-icon" onClick={() => handleListingClick(listing._id)} />
+                                            )}
                                         </div>
                                     </div>
                                 </div>
 
-                                {listingsExpanded.includes(listing._id) &&
+                                {expandedListingId === listing._id &&
                                     <div className="flex flex-col">
                                         <div className="flex flex-row gap-4 justify-start">
                                             <div className="h-[10rem] w-[13rem]">
@@ -99,8 +99,13 @@ const ListingsPage = (props) => {
                 </div>
                 <div className="h-[80%] w-full lg:w-2/3">
                     <MyGoogleMap listings={props.listings} 
-                    center={mostRecentExpandedListing ? { lat: mostRecentExpandedListing.latitude, lng: mostRecentExpandedListing.longitude } : calculatedCenter}
-                    expandedListings={listingsExpanded}
+                    center={expandedListingId 
+                        ? { 
+                            lat: props.listings.find(listing => listing._id === expandedListingId)?.latitude, 
+                            lng: props.listings.find(listing => listing._id === expandedListingId)?.longitude 
+                          } 
+                        : calculatedCenter}
+                    expandedListings={expandedListingId ? [expandedListingId] : []}
                     />
                 </div>
 
