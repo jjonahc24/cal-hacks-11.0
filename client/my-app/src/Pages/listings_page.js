@@ -9,7 +9,6 @@ import starIcon from "../Assets/star-fill.svg";
 
 const ListingsPage = (props) => {
     const [expandedListingId, setExpandedListingId] = useState(null);
-    const [googleLoaded, setGoogleLoaded] = useState(false); // Track Google API availability
 
     const navigate = useNavigate();
 
@@ -24,22 +23,6 @@ const ListingsPage = (props) => {
     const handleListingClick = (listingId) => {
         setExpandedListingId((prevId) => (prevId === listingId ? null : listingId));
     };
-
-    // Check for window.google availability and set googleLoaded to true
-    useEffect(() => {
-        if (!window.google) {
-            const interval = setInterval(() => {
-                if (window.google) {
-                    setGoogleLoaded(true);
-                    clearInterval(interval);
-                }
-            }, 100); // Check every 100ms
-
-            return () => clearInterval(interval);
-        } else {
-            setGoogleLoaded(true);
-        }
-    }, []);
 
     return (
         <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-5">
