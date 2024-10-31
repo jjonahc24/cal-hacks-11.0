@@ -19,4 +19,4 @@ def create_app():
     
     return app
 
-create_app().run(port=8000)
+create_app().run()
