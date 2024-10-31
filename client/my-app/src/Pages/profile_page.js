@@ -88,7 +88,7 @@ const ProfilePage = (props) => {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}user/getUserEmail`, {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/getUserEmail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
