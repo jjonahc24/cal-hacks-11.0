@@ -11,7 +11,7 @@ def create_app():
     app = Flask(__name__) 
     
     # when running website in localhost, add http://localhost:3000 to origins
-    CORS(app)  # Enable if you're sending cookies or auth headers
+    CORS(app, origins=["https://spot-wrwm.onrender.com"])  # Enable if you're sending cookies or auth headers
 
     app.config['MONGO_URI'] = os.environ.get("MONGO_URI")  # Replace with your MongoDB URI
     extensions.mongo.init_app(app)
@@ -20,3 +20,6 @@ def create_app():
     return app
 
 app = create_app()
+
+if __name__ == '__main__':
+    app.run(debug=True)
