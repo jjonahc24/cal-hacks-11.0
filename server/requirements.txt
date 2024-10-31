@@ -4,4 +4,5 @@ Flask_PyMongo==2.3.0
 python-dotenv==1.0.1
 googlemaps==4.10.0
 pydantic==2.9.2
+gunicorn==23.0.0
 
