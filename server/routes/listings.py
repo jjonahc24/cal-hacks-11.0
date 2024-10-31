@@ -1,4 +1,5 @@
 from flask import Blueprint, request
+from flask_cors import cross_origin
 import controllers
 
 def register_listings(app):
@@ -6,8 +7,11 @@ def register_listings(app):
 
 listing_bp = Blueprint('listing', __name__)
 
-@listing_bp.route('/', methods = ['GET'])
+@listing_bp.route('/', methods = ['GET', 'OPTIONS'])
+@cross_origin(origins=["https://spot-black.vercel.app"])
 def get_listings():
+    if request.method == 'OPTIONS':
+        return '', 200  # Handle preflight OPTIONS request
     id_filter = request.args.get('id')
     owner_id_filter = request.args.get('owner_id')
     address_filter = request.args.get('address')
