@@ -3,6 +3,7 @@ import Profile from '../components/landing_page/profile';
 import ProfileDropDown from '../components/landing_page/profile_dropdown';
 import ProfileDropDown_SignedIn from '../components/landing_page/profile_dropdown_signedin';
 import SearchBar from '../components/search_bar';
+import { AiOutlineInfoCircle } from 'react-icons/ai';
 
 function LandingPage(props) {
   const [text, setText] = useState(""); // Current text being typed
@@ -48,6 +49,19 @@ function LandingPage(props) {
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
         <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[230%] text-center text-3xl font-bold mb-4">{text}</h1> {/* Typewriter effect text */}
         <SearchBar setListings={props.setListings} setSearchedLocation={props.setSearchedLocation} setStartDate={props.setStartDate} setEndDate={props.setEndDate}/>
+        <div className="mt-6 flex justify-center items-center bg-green-100 text-green-800 text-sm font-semibold px-4 py-3 rounded-lg shadow-md max-w-md mx-auto">
+          {/* Tooltip Wrapper */}
+          <div className="relative group flex items-center">
+            <AiOutlineInfoCircle className="mr-2" size={18} />
+            {/* Tooltip */}
+            <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-700 text-white text-xs rounded-md px-2 py-1 w-max">
+              Real data is not yet available. This is for Demo purposes.
+            </div>
+          </div>
+          <p>
+            Search for <span className="font-bold text-customGray">Berkeley, CA</span> for sample listings.
+          </p>
+        </div>
       </div>
     </div>
   );
