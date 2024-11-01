@@ -71,7 +71,12 @@ const ListingsPage = (props) => {
                         </h1>
                     </div>
                     <hr className="w-4/5 mb-2 border-[#16B364]"></hr>
-                    {props.listings.map((listing, index) => {
+                    {props.listings.length === 0 ? (
+                        <div className="flex items-center justify-center h-full text-[20px] text-gray-500">
+                            No listings in this area
+                        </div>
+                    ) : (
+                    props.listings.map((listing, index) => {
                         const isExpanded = expandedListingId === listing._id;
                         return (
                             <div 
@@ -129,9 +134,10 @@ const ListingsPage = (props) => {
                                 }
 
                             </div>
-                        )
+                        );
 
-                    })}
+                    })
+                )}
                 </div>
                 <div className="h-[80%] w-full lg:w-2/3">
 
