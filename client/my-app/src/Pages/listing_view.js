@@ -60,7 +60,7 @@ const ListingView = () => {
                             </div>
                         </div>
                         <div className="flex flex-row justify-center mt-[17rem]">
-                            <button className="w-[15rem] bg-[#16B364] text-[24px] text-white p-2 rounded-[15px] hover:scale-[0.99]">Reserve</button>
+                            <button className="w-[15rem] bg-[#16B364] text-[24px] text-white p-2 rounded-[15px] hover:scale-[0.99] opacity-50 cursor-not-allowed" disabled>Reserve</button>
                         </div>
                     </div>
                 </div>
