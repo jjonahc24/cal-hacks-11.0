@@ -88,7 +88,7 @@ const ListingsPage = (props) => {
                                         <p className="p-0 m-0 text-[1rem]">{listing.owner_name}</p>
                                     </div>
                                     <div className="flex flex-row gap-3 items-center">
-                                        <p className="p-0 m-0 text-[1rem] text-[#6C6969]">${listing.hourly_rate}</p>
+                                        <p className="p-0 m-0 text-[1rem] text-[#6C6969]">${listing.hourly_rate} /day</p>
                                         <div className="w-[20px] h-[20px] cursor-pointer">
                                             {isExpanded ? (
                                                 <img src={downIcon} alt="down-icon" onClick={() => handleListingClick(listing._id)} />
