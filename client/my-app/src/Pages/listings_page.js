@@ -25,7 +25,7 @@ const ListingsPage = (props) => {
     };
 
     return (
-        <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-5">
+        <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-6">
             <SearchBar
                 setSearchedLocation={props.setSearchedLocation}
                 setStartDate={props.setStartDate}
@@ -43,8 +43,15 @@ const ListingsPage = (props) => {
                     </div>
                     <hr className="w-4/5 mb-2 border-[#16B364]"></hr>
                     {props.listings.map((listing, index) => {
+                        const isExpanded = expandedListingId === listing._id;
                         return (
-                            <div key={index} className="w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4">
+                            <div 
+                                key={index} 
+                                className={`w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4 transition-colors duration-300
+                                    ${isExpanded ? "bg-[#D5F5E3] border-l-4 border-[#16B364]" : ""}
+                                    hover:bg-[#D5F5E3] hover:border-l-4 hover:border-[#16B364]`}
+                                    onClick={() => handleListingClick(listing._id)}
+                            >
                                 <div className="flex flex-row w-full justify-between ">
                                     <div className="flex flex-row items-center gap-3">
                                         <img className="w-[40px] h-[40px] rounded-full" alt="owner-picture" src={listing.owner_picture}></img>
@@ -53,7 +60,7 @@ const ListingsPage = (props) => {
                                     <div className="flex flex-row gap-3 items-center">
                                         <p className="p-0 m-0 text-[1rem] text-[#6C6969]">${listing.hourly_rate}</p>
                                         <div className="w-[20px] h-[20px] cursor-pointer">
-                                            {expandedListingId === listing._id ? (
+                                            {isExpanded ? (
                                                 <img src={downIcon} alt="down-icon" onClick={() => handleListingClick(listing._id)} />
                                             ) : (
                                                 <img className="ml-1" src={rightIcon} alt="right-icon" onClick={() => handleListingClick(listing._id)} />
@@ -62,7 +69,7 @@ const ListingsPage = (props) => {
                                     </div>
                                 </div>
 
-                                {expandedListingId === listing._id &&
+                                {isExpanded &&
                                     <div className="flex flex-col">
                                         <div className="flex flex-row gap-4 justify-start">
                                             <div className="h-[10rem] w-[13rem]">
