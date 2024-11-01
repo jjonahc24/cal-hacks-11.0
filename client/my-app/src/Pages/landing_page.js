@@ -47,21 +47,22 @@ function LandingPage(props) {
   return (
     <div className="App h-screen relative">
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
-        <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[230%] text-center text-3xl font-bold mb-4">{text}</h1> {/* Typewriter effect text */}
+        <h1 className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-[230%] text-center text-3xl font-bold mb-4 -mt-12">{text}</h1> {/* Typewriter effect text */}
         <SearchBar setListings={props.setListings} setSearchedLocation={props.setSearchedLocation} setStartDate={props.setStartDate} setEndDate={props.setEndDate}/>
-        <div className="mt-6 flex justify-center items-center bg-green-100 text-green-800 text-sm font-semibold px-4 py-3 rounded-lg shadow-md max-w-md mx-auto">
-          {/* Tooltip Wrapper */}
-          <div className="relative group flex items-center">
-            <AiOutlineInfoCircle className="mr-2" size={18} />
-            {/* Tooltip */}
-            <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-700 text-white text-xs rounded-md px-2 py-1 w-max">
-              Real data is not yet available. This is for Demo purposes.
-            </div>
+      
+        <div className="mt-6 flex justify-center items-center bg-green-100 text-green-800 text-xs font-semibold px-4 py-3 rounded-lg shadow-md max-w-md mx-auto">
+        <div className="relative group flex items-center">
+          <AiOutlineInfoCircle className="mr-2" size={16} />
+          <div className="absolute bottom-full mb-2 hidden group-hover:block bg-gray-700 text-white text-[10px] rounded-md px-2 py-1 w-max">
+            This is for Demo purposes.
           </div>
-          <p>
-            Search for <span className="font-bold text-customGray">Berkeley, CA</span> for sample listings.
-          </p>
         </div>
+        <p className="text-[10px] leading-tight">
+          Search <span className="font-bold text-customGray">Berkeley, CA</span> for sample listings.
+          <br />
+          Initial search may take ~50 seconds as backend is hosted on an unscaled cloud platform at the moment. 
+        </p>
+      </div>
       </div>
     </div>
   );
