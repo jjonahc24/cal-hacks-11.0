@@ -1,1 +1,1 @@
-Visit [spot.](https://spot-black.vercel.app/)
+Visit [spot.](https://spot-dot.vercel.app/)
