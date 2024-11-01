@@ -30,6 +30,7 @@ const MyGoogleMap = (props) => {
       lat: listing.latitude,
       lng: listing.longitude,
       title: listing.listingName,
+      id: listing._id,
       isExpanded: props.expandedListings.includes(listing._id),
     }));
 
@@ -66,6 +67,7 @@ const MyGoogleMap = (props) => {
                     )
                   : undefined, // Fallback if `window.google` isn't loaded yet
               }}
+              onClick={() => props.onMarkerClick(location.id)}
             />
           ))}
 

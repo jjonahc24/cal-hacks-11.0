@@ -1,6 +1,6 @@
 import MyGoogleMap from "../components/my_google_map.js";
 import SearchBar from "../components/search_bar.js"
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import downIcon from "../Assets/down-icon.svg";
 import rightIcon from "../Assets/right-icon.svg";
@@ -9,7 +9,8 @@ import starIcon from "../Assets/star-fill.svg";
 
 const ListingsPage = (props) => {
     const [expandedListingId, setExpandedListingId] = useState(null);
-
+    const listingRefs = useRef({}); // Store refs for each listing
+    const listingContainerRef = useRef(null);
     const navigate = useNavigate();
 
     // Calculate the average center of all listings
@@ -20,8 +21,33 @@ const ListingsPage = (props) => {
           }
         : { lat: 37.7749, lng: -122.4194 }; // Default to San Francisco if no listings
 
+    // Expand or collapse a listing based on its ID
     const handleListingClick = (listingId) => {
-        setExpandedListingId((prevId) => (prevId === listingId ? null : listingId));
+        setExpandedListingId((prevId) => {
+            const newId = prevId === listingId ? null : listingId;
+            
+            // If a listing is expanded, scroll to it within the container
+            if (newId && listingRefs.current[newId] && listingContainerRef.current) {
+                const listingElement = listingRefs.current[newId]; // Get the target listing element
+                const container = listingContainerRef.current; // Get the container element
+                const containerTop = container.scrollTop; // Current scroll position of container
+                const containerOffset = container.getBoundingClientRect().top; // Top position of container relative to viewport
+                const elementOffset = listingElement.getBoundingClientRect().top; // Top position of listing element relative to viewport
+                
+                // Calculate the scroll position and scroll smoothly
+                container.scrollTo({
+                    top: containerTop + elementOffset - containerOffset - 20, // Adjust by offset for better visibility
+                    behavior: "smooth",
+                });
+            }
+
+            return newId; // Update the expanded listing ID
+        });
+    };
+
+    // Custom handler for marker click on the map
+    const handleMarkerClick = (listingId) => {
+        handleListingClick(listingId); // Reuse handleListingClick for marker click
     };
 
     return (
@@ -35,7 +61,10 @@ const ListingsPage = (props) => {
                 
 
             <div className="h-full w-full flex flex-col lg:flex-row gap-4 justify-center">
-                <div className="listings flex flex-col h-[80%] bg-[#EDFCF2] rounded-xl shadow-2xl shadow-[#CFE9D8] w-full lg:w-1/3 items-center overflow-y-scroll">
+                <div 
+                    ref={listingContainerRef}
+                    className="listings flex flex-col h-[80%] bg-[#EDFCF2] rounded-xl shadow-2xl shadow-[#CFE9D8] w-full lg:w-1/3 items-center overflow-y-scroll"
+                >
                     <div>
                         <h1 className="p-4 m-0 text-[24px]">
                             Available Listings in <span className="text-[#34C759]">{props.searchedLocation}</span>
@@ -46,7 +75,8 @@ const ListingsPage = (props) => {
                         const isExpanded = expandedListingId === listing._id;
                         return (
                             <div 
-                                key={index} 
+                                key={index}
+                                ref={(el) => (listingRefs.current[listing._id] = el)}
                                 className={`w-full pl-4 pr-4 pt-2 pb-2 flex flex-col gap-4 transition-colors duration-300
                                     ${isExpanded ? "bg-[#D5F5E3] border-l-4 border-[#16B364]" : ""}
                                     hover:bg-[#D5F5E3] hover:border-l-4 hover:border-[#16B364]`}
@@ -113,6 +143,7 @@ const ListingsPage = (props) => {
                             } 
                             : calculatedCenter}
                         expandedListings={expandedListingId ? [expandedListingId] : []}
+                        onMarkerClick={handleMarkerClick}
                         />
 
                 </div>
