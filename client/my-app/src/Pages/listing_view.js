@@ -42,7 +42,7 @@ const ListingView = () => {
                     </div>
                     <div className="rentInterface p-[3rem] rounded-[15px] shadow-2xl shadow-[#CFE9D8] w-[40%] h-[40rem] bg-[#EDFCF2] flex flex-col">
                         <div>
-                            <h1 className="text-[2rem] font-medium">${listing.hourly_rate} / day</h1>
+                            <h1 className="text-[2rem] font-medium">${listing.hourly_rate} /day</h1>
                             <p className="text-[1.5rem] text-[#6C6969]">Total before taxes</p>
                         </div>
                         <div className="h-[5rem] rounded-t-xl mt-4 border-2 border-black w-full flex">
