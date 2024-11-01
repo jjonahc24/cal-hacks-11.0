@@ -23,6 +23,11 @@ const ListingsPage = (props) => {
 
     // Expand or collapse a listing based on its ID
     const handleListingClick = (listingId) => {
+        setExpandedListingId((prevId) => (prevId === listingId ? null : listingId));
+    };
+
+    // Custom handler for marker click on the map
+    const handleMarkerClick = (listingId) => {
         setExpandedListingId((prevId) => {
             const newId = prevId === listingId ? null : listingId;
             
@@ -43,11 +48,6 @@ const ListingsPage = (props) => {
 
             return newId; // Update the expanded listing ID
         });
-    };
-
-    // Custom handler for marker click on the map
-    const handleMarkerClick = (listingId) => {
-        handleListingClick(listingId); // Reuse handleListingClick for marker click
     };
 
     return (
