@@ -36,7 +36,7 @@ function App() {
     const checkUserInDb = async () => {
       if (isAuthenticated && user) {
         try {
-          const response = await fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/user/getUserEmail`, {
+          const response = await fetch("http://127.0.0.1:8000/user/getUserEmail", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",  // Specify that you're sending JSON
@@ -67,7 +67,7 @@ function App() {
 
 
   return (
-    <div className="App p-10 h-full w-full">
+    <div className="App p-10 h-full w-full overflow-hidden">
       <Router>
         <Navbar
           profileToggled={profileToggled}

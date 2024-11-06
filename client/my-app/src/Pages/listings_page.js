@@ -52,15 +52,18 @@ const ListingsPage = (props) => {
 
     return (
         <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-6">
+            <div className="fixed top-4 left-1/2 transform -translate-x-1/2">
             <SearchBar
                 setSearchedLocation={props.setSearchedLocation}
                 setStartDate={props.setStartDate}
                 setEndDate={props.setEndDate} 
                 setListings={props.setListings}
                 />
+            </div>
+
                 
 
-            <div className="h-full w-full flex flex-col lg:flex-row gap-4 justify-center">
+            <div className="h-full w-full flex flex-col lg:flex-row gap-4 justify-center mt-10">
                 <div 
                     ref={listingContainerRef}
                     className="listings flex flex-col h-[80%] bg-[#EDFCF2] rounded-xl shadow-2xl shadow-[#CFE9D8] w-full lg:w-1/3 items-center overflow-y-scroll"
@@ -90,10 +93,10 @@ const ListingsPage = (props) => {
                                 <div className="flex flex-row w-full justify-between ">
                                     <div className="flex flex-row items-center gap-3">
                                         <img className="w-[40px] h-[40px] rounded-full" alt="owner-picture" src={listing.owner_picture}></img>
-                                        <p className="p-0 m-0 text-[1rem]">{listing.owner_name}</p>
+                                        <p className={`p-0 m-0 text-[1rem] ${isExpanded ? "font-medium" : ""}`}>{listing.owner_name}</p>
                                     </div>
                                     <div className="flex flex-row gap-3 items-center">
-                                        <p className="p-0 m-0 text-[1rem] text-[#6C6969]">${listing.hourly_rate} /day</p>
+                                        <p className={`p-0 m-0 text-[1rem] text-[#6C6969] ${isExpanded ? "font-medium" : ""}`}>${listing.hourly_rate} /day</p>
                                         <div className="w-[20px] h-[20px] cursor-pointer">
                                             {isExpanded ? (
                                                 <img src={downIcon} alt="down-icon" onClick={() => handleListingClick(listing._id)} />
@@ -122,11 +125,11 @@ const ListingsPage = (props) => {
                                             <button onClick={() => navigate(`/listings/${listing._id}`)} className="rounded-lg text-white w-[10rem] p-1 text-[12px] bg-[#16B364] hover:scale-[0.99] transition">
                                                 View Listing
                                             </button>
-                                            <div className="rating flex-row flex gap-4 items-center">
+                                            <div className="rating flex-row flex gap-2 items-center">
                                                 <p>
                                                     {listing.listing_rating.toFixed(1)}
                                                 </p>
-                                                <img src={starIcon} alt="star-icon"></img>
+                                                <img src={starIcon} alt="star-icon" className="w-[1.1vw] h-[1.1vw]"></img>
                                             </div>
                                         </div>
 
