@@ -51,8 +51,8 @@ const ListingsPage = (props) => {
     };
 
     return (
-        <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-6">
-            <div className="fixed top-4 left-1/2 transform -translate-x-1/2">
+        <div className="w-full h-full overflow-hidden flex justify-center flex-col relative pt-6 ">
+            <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
             <SearchBar
                 setSearchedLocation={props.setSearchedLocation}
                 setStartDate={props.setStartDate}
